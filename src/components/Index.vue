@@ -22,7 +22,7 @@
         <td>{{order.other}}</td>
         <td>{{order.submitted}}</td>
         <td>{{order.ordered_by}}</td>
-        <td><i class="material-icons">edit</i>  <i class="material-icons">delete</i></td>
+        <td><span><i class="material-icons edit" @click='editOrder()'>edit</i></span>  <span><i class="material-icons delete" @click='deleteOrder(order.id)'>delete</i></span></td>
       </tr>
     </tbody>
   </table>
@@ -30,43 +30,50 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from 'moment'
+import db from '@/firebase/init'
 
 export default {
   name: "Index",
   data() {
     return {
       orders: [
-        {
-          drink: "Chai Latte",
-          size:'Large',
-          extras:['Vanilla','Decaf'],
-          other: '',
-          slug: "chai-latte",
-          submitted: '12/13/2018',
-          ordered_by: 'Natasha Dronova',
-          id: 1
-        },
-        {
-          drink: "Chai Latte",
-          size:'Large',
-          extras:['Vanilla','Decaf'],
-          other: '',
-          slug: "chai-latte",
-          submitted: '13/12/2018',
-          id: 2,
-          ordered_by:'NatDr'
-        }
       ]
     };
-  }
+  },
+  methods:{
+    deleteOrder(id){
+      this.orders=this.orders.filter(order=>{
+        return order.id != id
+      })
+    },
+
+    
+  },
+  created() {
+      console.log('created')
+      //fetch data from the firestore
+      db.collection('orders').get()
+        .then(snapshot=>{
+          snapshot.forEach(doc => {
+            console.log(doc)
+          })
+        })
+    }
+
 };
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style>
-.extras{
-  display: inline-block;
+.delete {
+  cursor: pointer;
+  color: red;
+}
 
+.edit {
+  cursor: pointer;
+  color: orange;
 }
 </style>
