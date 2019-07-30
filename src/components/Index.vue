@@ -43,9 +43,16 @@ export default {
   },
   methods:{
     deleteOrder(id){
-      this.orders=this.orders.filter(order=>{
-        return order.id != id
-      })
+      // this.orders=this.orders.filter(order=>{
+      //   return order.id != id
+      // })
+      console.log(id)
+      db.collection('orders').doc(id).delete()
+        .then(() => {
+          this.orders=this.orders.filter(order =>{
+            return order.id!=id
+          })
+        })
     },
 
     
@@ -56,7 +63,10 @@ export default {
       db.collection('orders').get()
         .then(snapshot=>{
           snapshot.forEach(doc => {
-            console.log(doc)
+            //console.log(doc.data(), doc.id)
+            let order = doc.data()
+            order.id = doc.id
+            this.orders.push(order)
           })
         })
     }
