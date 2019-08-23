@@ -6,7 +6,7 @@
       <form class="col s12" @submit.prevent="AddCoffee">
         <div class="row"></div>
         <div class="input-field col s12">
-          <select v-model="coffee">
+          <select v-model="drink">
             <option value disabled selected>Coffee</option>
             <option value="Latte">Latte</option>
             <option value="Mocha">Mocha</option>
@@ -74,12 +74,13 @@
 <script>
 // import $ from 'jquery';
 import M from "materialize-css";
+import db from '@/firebase/init'
 
 export default {
   name: "AddOrder",
   data() {
     return {
-      coffee:'',
+      drink:'',
       size:'',
       extras:[],
       other:'',
@@ -91,7 +92,23 @@ export default {
   },
   methods:{
     AddCoffee(){
-      console.log(this.coffee)
+      console.log(this.order)
+      if (this.drink) {
+        this.feedback=null
+        db.collection('orders').add({
+          drink:this.drink,
+          size:this.size,
+          extras:this.extras,
+          other:this.other,
+          defaultorder:this.defaultorder
+        }).then(()=>{
+          this.$router.push({name:'Index'})
+        }).catch(err=>{
+          console.log(err)
+        })
+      } else {
+        this.feedback='You must add a coffee to your order'
+      }
     }
   }
 };
