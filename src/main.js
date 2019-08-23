@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import 'materialize-css/dist/js/materialize.min'
 
 Vue.config.productionTip = false
 
