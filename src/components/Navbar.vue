@@ -5,7 +5,7 @@
         <span class="brand-logo">Coffee App</span>
         <ul class="right">
           <li>
-            <router-link to=''>Home</router-link>
+            <router-link :to="{name: 'Index'}">Home</router-link>
           </li>
           <li>
             <router-link to=''>Sign In</router-link>
@@ -14,7 +14,7 @@
             <router-link to=''>Sign Up</router-link>
           </li>
           <li>
-            <router-link to=''>
+            <router-link :to="{ name: 'AddOrder'}">
             <a href="#" class=" btn-large  pink btn-flat"><i class="material-icons">add</i></a>
           </router-link>
           </li>
