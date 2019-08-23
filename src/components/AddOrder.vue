@@ -1,12 +1,12 @@
 <template>
   <div class="add-coffee container">
-    <h2 class="center-align indigo-text">Order Coffee</h2>
+    <h2 class="center-align pink-text">Order Coffee</h2>
 
     <div class="row">
-      <form class="col s12">
+      <form class="col s12" @submit.prevent="AddCoffee">
         <div class="row"></div>
         <div class="input-field col s12">
-          <select>
+          <select v-model="coffee">
             <option value disabled selected>Coffee</option>
             <option value="Latte">Latte</option>
             <option value="Mocha">Mocha</option>
@@ -15,7 +15,7 @@
         </div>
 
         <div class="input-field col s12">
-          <select>
+          <select v-model="size">
             <option value disabled selected>Size</option>
             <option value="Small">Small</option>
             <option value="Medium" default>Medium</option>
@@ -24,7 +24,7 @@
         </div>
 
         <div class="input-field col s12">
-          <select multiple>
+          <select multiple v-model="extras">
             <option value disabled selected>Extras</option>
             <optgroup label="Toppings">
               <option value="Vanilla">Vanilla</option>
@@ -48,15 +48,23 @@
             id="first_name"
             type="text"
             class="validate"
+            v-model="other"
           />
           <!-- <label for="first_name">Other:</label> -->
         </div>
 
         <div class="input-field col s12">
-          <label>
-            <input type="checkbox" class="filled-in" />
-            <span>Save as default order?</span>
-          </label>
+          <p>
+            <label>
+              <input type="checkbox" class="filled-in" v-model="defaultorder"/>
+              <span>Save as default order?</span>
+            </label>
+          </p>
+        </div>
+        <div class="input-field col s12">
+          <div class="field center-align">
+            <button class="btn pink">Add Order</button>
+          </div>
         </div>
       </form>
     </div>
@@ -70,10 +78,21 @@ import M from "materialize-css";
 export default {
   name: "AddOrder",
   data() {
-    return {};
+    return {
+      coffee:'',
+      size:'',
+      extras:[],
+      other:'',
+      defaultorder:''
+    };
   },
   mounted() {
     M.AutoInit();
+  },
+  methods:{
+    AddCoffee(){
+      console.log(this.coffee)
+    }
   }
 };
 </script>
