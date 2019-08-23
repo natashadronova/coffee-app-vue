@@ -22,7 +22,7 @@
         <td>{{order.other}}</td>
         <td>{{order.submitted}}</td>
         <td>{{order.ordered_by}}</td>
-        <td><span><i class="material-icons edit" @click='editOrder()'>edit</i></span>  <span><i class="material-icons delete" @click='deleteOrder(order.id)'>delete</i></span></td>
+        <td><span><i class="material-icons edit">edit</i></span><span><i class="material-icons delete" @click='deleteOrder(order.id)'>delete</i></span></td>
       </tr>
     </tbody>
   </table>
@@ -53,8 +53,7 @@ export default {
             return order.id!=id
           })
         })
-    },
-
+    }        
     
   },
   created() {
@@ -70,7 +69,7 @@ export default {
           })
         })
     }
-
+// computed properties and lodash framework
 };
 
 </script>
@@ -86,4 +85,3 @@ export default {
   cursor: pointer;
   color: orange;
 }
-</style>

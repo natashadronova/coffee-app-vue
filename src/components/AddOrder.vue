@@ -101,6 +101,7 @@ export default {
           extras:this.extras,
           other:this.other,
           defaultorder:this.defaultorder
+          // firebase.firestore.timestamp (to group based on time?)
         }).then(()=>{
           this.$router.push({name:'Index'})
         }).catch(err=>{
