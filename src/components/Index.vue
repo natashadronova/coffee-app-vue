@@ -22,7 +22,16 @@
         <td>{{order.other}}</td>
         <td>{{order.submitted}}</td>
         <td>{{order.ordered_by}}</td>
-        <td><span><i class="material-icons edit">edit</i></span><span><i class="material-icons delete" @click='deleteOrder(order.id)'>delete</i></span></td>
+        <td>
+          <span>
+            <router-link :to="{name:'EditOrder', params:{order_slug:order.id}}">
+              <i class="material-icons edit">edit</i>
+              </router-link>
+            </span>
+          <span>
+            <i class="material-icons delete" @click='deleteOrder(order.id)'>delete</i>
+            </span>
+        </td>
       </tr>
     </tbody>
   </table>

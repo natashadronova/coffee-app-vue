@@ -8,21 +8,26 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+   
+    {
+      path:'/add-order',
+      name:'AddOrder',
+      component: AddOrder
+    },
+   
+   
     {
       path: '/',
       name: 'Index',
       component: Index
     },
 
-    {
-      path:'/add-order',
-      name:'AddOrder',
-      component: AddOrder
-    },
+  
 
     {
-      path:'/edit-order/:order-slug',
-      name:'EditOrder'
+      path:'/edit-order/:order_slug',
+      name:'EditOrder',
+      component: EditOrder
     }
 
 
