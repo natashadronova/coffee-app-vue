@@ -15,7 +15,14 @@ export default {
     return {
 
     }
-  }
+  },
+  created(){
+    console.log(this.$route.params.order_slug)
+    db.collection('orders').doc(this.$route.params.order_slug).get()
+        .then((doc)=>{
+          console.log(doc.data())
+          })
+        }  
 }
 </script>
 
