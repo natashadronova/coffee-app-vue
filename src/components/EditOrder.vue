@@ -55,7 +55,7 @@
           <div class="input-field col s12">
             <p>
               <label>
-                <input type="checkbox" class="filled-in" v-model="order.defaultorder" />
+                <input type="checkbox" class="filled-in" v-model="order.orderActive" />
                 <span>Save as default order?</span>
               </label>
             </p>
@@ -94,7 +94,9 @@ export default {
           size:this.order.size,
           extras:this.order.extras,
           other:this.order.other,
-          defaultorder:this.order.defaultorder
+          orderActive:this.order.orderActive,
+          orderTime:Date.now()
+     
           // firebase.firestore.timestamp (to group based on time?)
         }).then(()=>{
           this.$router.push({name:'Index'})
