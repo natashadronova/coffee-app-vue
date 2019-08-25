@@ -54,12 +54,12 @@
         </div>
 
         <div class="input-field col s12">
-          <p>
+          <div class="switch">
             <label>
-              <input type="checkbox" class="filled-in" v-model="orderActive"/>
-              <span>Save as default order?</span>
+              <input type="checkbox" v-model="orderActive" />
+              <span>Make order active</span>
             </label>
-          </p>
+          </div>
         </div>
         <div class="input-field col s12">
           <div class="field center-align">
@@ -74,43 +74,46 @@
 <script>
 // import $ from 'jquery';
 import M from "materialize-css";
-import db from '@/firebase/init'
+import db from "@/firebase/init";
 
 export default {
   name: "AddOrder",
   data() {
     return {
-      drink:'',
-      size:'',
-      extras:[],
-      other:'',
-      orderActive:false,
-      orderTime:null
+      drink: "",
+      size: "",
+      extras: [],
+      other: "",
+      orderActive: false,
+      orderTime: null
     };
   },
   mounted() {
     M.AutoInit();
   },
-  methods:{
-    AddCoffee(){
-      console.log(this.order)
+  methods: {
+    AddCoffee() {
+      console.log(this.order);
       if (this.drink) {
-        this.feedback=null
-        db.collection('orders').add({
-          drink:this.drink,
-          size:this.size,
-          extras:this.extras,
-          other:this.other,
-          orderActive:this.orderActive,
-          orderTime: Date.now() //Date.now()
-          // firebase.firestore.timestamp (to group based on time?)
-        }).then(()=>{
-          this.$router.push({name:'Index'})
-        }).catch(err=>{
-          console.log(err)
-        })
+        this.feedback = null;
+        db.collection("orders")
+          .add({
+            drink: this.drink,
+            size: this.size,
+            extras: this.extras,
+            other: this.other,
+            orderActive: this.orderActive,
+            orderTime: Date.now() //Date.now()
+            // firebase.firestore.timestamp (to group based on time?)
+          })
+          .then(() => {
+            this.$router.push({ name: "Index" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
       } else {
-        this.feedback='You must add a coffee to your order'
+        this.feedback = "You must add a coffee to your order";
       }
     }
   }

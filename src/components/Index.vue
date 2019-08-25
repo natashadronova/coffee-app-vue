@@ -3,6 +3,7 @@
     <table class="highlight responsive-table">
       <thead>
         <tr>
+          <th>Ordered?</th>
           <th>Order</th>
           <th>Size</th>
           <th>Extras</th>
@@ -14,6 +15,11 @@
       </thead>
       <tbody>
         <tr v-for="order in orders" :key="order.id">
+          <td>
+            <i v-if="order.orderActive === false" ></i>
+            <i v-if="order.orderActive === true" class="material-icons check_cirlce green">check</i>
+          
+          </td>
           <td>{{order.drink}}</td>
           <td>{{order.size}}</td>
           <td>
@@ -50,10 +56,10 @@ export default {
     };
   },
   filters: {
-  moment: function (date) {
-    return moment(date).calendar();
-  }
-},
+    moment: function(date) {
+      return moment(date).calendar();
+    }
+  },
   methods: {
     deleteOrder(id) {
       // this.orders=this.orders.filter(order=>{
@@ -68,7 +74,7 @@ export default {
             return order.id != id;
           });
         });
-    },
+    }
     // moment as a method not working. same with {{moment(date).calendar()}}
     // why?
     // moment(date) {
@@ -86,7 +92,6 @@ export default {
           let order = doc.data();
           order.id = doc.id;
           this.orders.push(order);
-          
         });
       });
   }

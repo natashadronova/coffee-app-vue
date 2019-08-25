@@ -53,12 +53,12 @@
           </div>
 
           <div class="input-field col s12">
-            <p>
-              <label>
-                <input type="checkbox" class="filled-in" v-model="order.orderActive" />
-                <span>Save as default order?</span>
-              </label>
-            </p>
+            <div class="switch">
+            <label>
+              <input type="checkbox" v-model="order.orderActive" />
+              <span>Make order active</span>
+            </label>
+          </div>
           </div>
           <div class="input-field col s12">
             <div class="field center-align">
