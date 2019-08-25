@@ -20,7 +20,7 @@
             <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
           </td>
           <td>{{order.other}}</td>
-          <td>{{moment(order.orderTime).calendar() }}</td>
+          <td>{{order.orderTime | moment }}</td>
           <td>{{order.ordered_by}}</td>
           <td>
             <span>
@@ -49,6 +49,11 @@ export default {
       orders: []
     };
   },
+  filters: {
+  moment: function (date) {
+    return moment(date).calendar();
+  }
+},
   methods: {
     deleteOrder(id) {
       // this.orders=this.orders.filter(order=>{
@@ -64,9 +69,11 @@ export default {
           });
         });
     },
-    moment() {
-      return moment();
-    }
+    // moment as a method not working. same with {{moment(date).calendar()}}
+    // why?
+    // moment(date) {
+    //   return moment(date).calendar();
+    // }
   },
   created() {
     console.log("created");
@@ -79,6 +86,7 @@ export default {
           let order = doc.data();
           order.id = doc.id;
           this.orders.push(order);
+          
         });
       });
   }

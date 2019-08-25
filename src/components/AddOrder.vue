@@ -102,7 +102,7 @@ export default {
           extras:this.extras,
           other:this.other,
           orderActive:this.orderActive,
-          orderTime:Date.now() //Date.now()
+          orderTime: Date.now() //Date.now()
           // firebase.firestore.timestamp (to group based on time?)
         }).then(()=>{
           this.$router.push({name:'Index'})
