@@ -4,6 +4,7 @@
       <div class="container">
         <span class="brand-logo">Coffee App</span>
         <ul class="right">
+          <li v-if="isLoggedIn"><span class="email black-text">{{currentUser}}</span></li>
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'Index'}">Home</router-link>
           </li>
