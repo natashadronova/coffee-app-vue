@@ -10,6 +10,7 @@
             placeholder="Email"
             id="email"
             type="text"
+            v-model="email"
           />
 
         </div>
@@ -20,12 +21,13 @@
             placeholder="Password"
             id="password"
             type="password"
+            v-model="password"
           />
 
         </div>
         
           <div class="field center-align">
-            <button class="btn pink">Login</button>
+            <button v-on:click="Login" class="btn pink">Login</button>
           </div>
      
       </form>
@@ -34,11 +36,33 @@
 
 
 <script>
+import firebase from 'firebase';
+
 export default {
   name:'Login',
-  data(){
-    return{
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
 
+  methods: {
+    Login: function(e) {
+      firebase.auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            console.log(user)
+            alert(`You are logged in as ${user.email}`);
+            this.$router.go({path:this.$router.path});
+          },
+          err => {
+            alert(err.message);
+          }
+        );
+      console.log("register");
+      e.preventDefault();
     }
   }
 }

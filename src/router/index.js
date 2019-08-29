@@ -5,23 +5,30 @@ import AddOrder from '@/components/AddOrder'
 import EditOrder from '@/components/EditOrder'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import firebase from 'firebase';
 
 Vue.use(Router)
 
-export default new Router({
+let router =  new Router({
   routes: [
    
     {
       path:'/add-order',
       name:'AddOrder',
-      component: AddOrder
+      component: AddOrder,
+      meta:{
+        requiresAuth:true
+      }
     },
    
    
     {
       path: '/',
       name: 'Index',
-      component: Index
+      component: Index,
+      meta:{
+        requiresAuth:true
+      }
     },
 
   
@@ -29,22 +36,71 @@ export default new Router({
     {
       path:'/edit-order/:order_slug',
       name:'EditOrder',
-      component: EditOrder
+      component: EditOrder,
+      meta:{
+        requiresAuth:true
+      }
     },
 
     {
       path:'/login',
       name:'Login',
-      component: Login
+      component: Login,
+      meta:{
+        requiresGuest:true
+      }
     },
 
     {
       path:'/register',
       name:'Register',
-      component: Register
+      component: Register,
+      meta:{
+        requiresGuest:true
+      }
     }
 
 
 
   ]
 })
+
+
+//NavGuards
+router.beforeEach((to,from,next)=>{
+  // Check for requiresAuth guard
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Check if NO logged user
+    if (!firebase.auth().currentUser) {
+      // Go to login
+      next({
+        path: '/login',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      // Proceed to route
+      next();
+    }
+  } else if (to.matched.some(record => record.meta.requiresGuest)) {
+    // Check if NO logged user
+    if (firebase.auth().currentUser) {
+      // Go to login
+      next({
+        path: '/',
+        query: {
+          redirect: to.fullPath
+        }
+      });
+    } else {
+      // Proceed to route
+      next();
+    }
+  } else {
+    // Proceed to route
+    next();
+  }
+})
+
+export default router;
