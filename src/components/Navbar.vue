@@ -8,10 +8,10 @@
             <router-link :to="{name: 'Index'}">Home</router-link>
           </li>
           <li>
-            <router-link to=''>Sign In</router-link>
+            <router-link :to="{name: 'Login'}" >Log In</router-link>
           </li>
           <li>
-            <router-link to=''>Sign Up</router-link>
+            <router-link :to="{name: 'Register'}">Register</router-link>
           </li>
           <li>
             <router-link :to="{ name: 'AddOrder'}">
