@@ -11,6 +11,12 @@
             <option value="Latte">Latte</option>
             <option value="Mocha">Mocha</option>
             <option value="Hot Chocolate">Hot Chocolate</option>
+            <option value="Flat White">Flat White</option>
+            <option value="Long Black">Long Black</option>
+            <option value="Chai Latte">Chai Latte</option>
+            <option value="Dirty Chai Latte">Dirty Chai Latte</option>
+            <option value="Piccolo">Piccolo</option>
+            <option value="Cappucino">Cappucino</option>
           </select>
         </div>
 
@@ -34,11 +40,13 @@
             <optgroup label="Milk">
               <option value="Soy">Soy Milk</option>
               <option value="Almond">Almond Milk</option>
+              <option value="Skim">Skim Milk</option>
             </optgroup>
             <optgroup label="Strength">
               <option value="Decaf">Decaf</option>
               <option value="Extra Shot">Extra Shot</option>
             </optgroup>
+            
           </select>
         </div>
 
