@@ -93,7 +93,8 @@ export default {
       other: "",
       orderActive: false,
       orderTime: null,
-      orderedBy:  ''
+      orderedBy:  '',
+      orderedByID:''
     };
   },
   mounted() {
@@ -106,6 +107,7 @@ export default {
       //query users collection to get user's name
       db.collection("users").doc(curUser).get().then((doc)=>{
         this.orderedBy = doc.data().name
+        this.orderedByID = curUser
         });
       
   },
@@ -122,7 +124,8 @@ export default {
             other: this.other,
             orderActive: this.orderActive,
             orderedBy: this.orderedBy,
-            orderTime: Date.now()
+            orderTime: Date.now(),
+            orderedByID:this.orderedByID
           })
           .then(() => {
             this.$router.push({ name: "Index" });

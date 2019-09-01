@@ -34,7 +34,7 @@
                 <i class="material-icons edit">edit</i>
               </router-link>
             </span>
-            <span>
+            <span style="cursor:pointer;">
               <i class="material-icons delete" @click="deleteOrder(order.id)">delete</i>
             </span>
           </td>
@@ -47,6 +47,7 @@
 <script>
 import moment from "moment";
 import db from "@/firebase/init";
+import firebase from "firebase";
 
 export default {
   name: "Index",
@@ -65,8 +66,18 @@ export default {
       // this.orders=this.orders.filter(order=>{
       //   return order.id != id
       // })
-      console.log(id);
-      db.collection("orders")
+      //if (firebase.auth().currentUser.uid == 
+      //
+      //check if the current user is the one who ordered
+
+      // gets uid of current user
+      let curUser = firebase.auth().currentUser.uid 
+      console.log('cuUser = ', curUser)
+      //query users collection to get user's name
+      db.collection("orders").doc(id).get().then((doc)=>{
+        console.log(doc.data().orderedByID)
+        if(curUser == doc.data().orderedByID) {
+          db.collection("orders")
         .doc(id)
         .delete()
         .then(() => {
@@ -74,6 +85,11 @@ export default {
             return order.id != id;
           });
         });
+        }
+        });
+
+      
+      
     }
     // moment as a method not working. same with {{moment(date).calendar()}}
     // why?
