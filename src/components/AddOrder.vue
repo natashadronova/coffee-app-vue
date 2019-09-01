@@ -58,7 +58,6 @@
             class="validate"
             v-model="other"
           />
-          <!-- <label for="first_name">Other:</label> -->
         </div>
 
         <div class="input-field col s12">
@@ -80,9 +79,9 @@
 </template>
 
 <script>
-// import $ from 'jquery';
 import M from "materialize-css";
 import db from "@/firebase/init";
+import firebase from "firebase";
 
 export default {
   name: "AddOrder",
@@ -93,15 +92,26 @@ export default {
       extras: [],
       other: "",
       orderActive: false,
-      orderTime: null
+      orderTime: null,
+      orderedBy:  ''
     };
   },
   mounted() {
     M.AutoInit();
   },
+
+  created() {
+     // gets uid of current user
+      let curUser = firebase.auth().currentUser.uid 
+      //query users collection to get user's name
+      db.collection("users").doc(curUser).get().then((doc)=>{
+        this.orderedBy = doc.data().name
+        });
+      
+  },
+
   methods: {
     AddCoffee() {
-      console.log(this.order);
       if (this.drink) {
         this.feedback = null;
         db.collection("orders")
@@ -111,8 +121,8 @@ export default {
             extras: this.extras,
             other: this.other,
             orderActive: this.orderActive,
-            orderTime: Date.now() //Date.now()
-            // firebase.firestore.timestamp (to group based on time?)
+            orderedBy: this.orderedBy,
+            orderTime: Date.now()
           })
           .then(() => {
             this.$router.push({ name: "Index" });

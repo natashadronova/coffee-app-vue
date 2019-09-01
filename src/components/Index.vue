@@ -27,7 +27,7 @@
           </td>
           <td>{{order.other}}</td>
           <td>{{order.orderTime | moment }}</td>
-          <td>{{order.ordered_by}}</td>
+          <td>{{order.orderedBy}}</td>
           <td>
             <span>
               <router-link :to="{name:'EditOrder', params:{order_slug:order.id}}">
