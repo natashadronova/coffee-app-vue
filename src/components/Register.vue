@@ -23,7 +23,7 @@
       </div>
 
       <div class="field center-align">
-        <button v-on:click="register" class="btn pink">Register</button>
+        <button v-on:click="register" class="btn amber darken-3">Register</button>
       </div>
     </form>
   </div>

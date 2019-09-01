@@ -27,7 +27,7 @@
         </div>
         
           <div class="field center-align">
-            <button v-on:click="Login" class="btn pink">Login</button>
+            <button v-on:click="Login" class="btn amber darken-3">Login</button>
           </div>
      
       </form>

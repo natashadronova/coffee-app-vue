@@ -70,7 +70,7 @@
         </div>
         <div class="input-field col s12">
           <div class="field center-align">
-            <button class="btn pink">Add Order</button>
+            <button class="btn amber darken-3">Add Order</button>
           </div>
         </div>
       </form>

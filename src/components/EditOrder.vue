@@ -55,14 +55,14 @@
           <div class="input-field col s12">
             <div class="switch">
             <label>
-              <input type="checkbox" v-model="order.orderActive" />
+              <input type="checkbox " v-model="order.orderActive" />
               <span>Make order active</span>
             </label>
           </div>
           </div>
           <div class="input-field col s12">
             <div class="field center-align">
-              <button class="btn pink">Update Order</button>
+              <button class="btn amber darken-3">Update Order</button>
             </div>
           </div>
         </form>

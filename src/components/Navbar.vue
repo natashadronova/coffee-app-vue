@@ -1,61 +1,70 @@
 <template>
   <div class="navbar">
-    <nav class="nav-wrapper brown lighten-3">
-      <div class="container">
-        <span class="brand-logo">Coffee App</span>
+    <nav class="nav-wrapper amber darken-3">
+      <div class="container-fluid">
+        <span v-if="isLoggedIn" class="left">{{currentUser}}</span>
+        <span class="brand-logo center">CoffeeQuest</span>
         <ul class="right">
-          <li v-if="isLoggedIn"><span class="email black-text">{{currentUser}}</span></li>
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'Index'}">Home</router-link>
           </li>
           <li v-if="!isLoggedIn">
-            <router-link :to="{name: 'Login'}" >Log In</router-link>
+            <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
           <li v-if="!isLoggedIn">
             <router-link :to="{name: 'Register'}">Register</router-link>
           </li>
           <li v-if="isLoggedIn">
-            <button class="btn black" v-on:click="Logout">Logout</button>
+            <a v-on:click="Logout">Log Out</a>
           </li>
           <li v-if="isLoggedIn">
             <router-link :to="{ name: 'AddOrder'}">
-            <a href="#" class=" btn-large  pink btn-flat"><i class="material-icons">add</i></a>
-          </router-link>
+              <a class="btn-floating btn-large waves-effect waves-light white">
+                <i class="material-icons amber-text text-darken-3">add</i>
+              </a>
+            </router-link>
           </li>
         </ul>
-       
       </div>
-
-    
     </nav>
   </div>
 </template>
 
 
 <script>
-import firebase from 'firebase';
-
+import firebase from "firebase";
+import db from "@/firebase/init";
 
 export default {
   name: "Navbar",
   data() {
     return {
-      isLoggedIn:false,
-      currentUser:false
+      isLoggedIn: false,
+      currentUser: ""
     };
   },
-  created(){
-    if(firebase.auth().currentUser) {
-      this.isLoggedIn=true;
-      this.currentUser=firebase.auth().currentUser.email;
+  created() {
+    if (firebase.auth().currentUser) {
+      this.isLoggedIn = true;
+      // gets uid of current user
+      let currUser = firebase.auth().currentUser.uid;
+      //query users collection to get user's name
+      db.collection("users")
+        .doc(currUser)
+        .get()
+        .then(doc => {
+          this.currentUser = doc.data().name + " " + doc.data().lastname;
+        });
     }
   },
-  methods:{
-    Logout: function(){
-      firebase.auth().signOut().then(()=>{
-       
-        this.$router.go({path:this.$router.path});
-      })
+  methods: {
+    Logout: function() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.go({ path: this.$router.path });
+        });
     }
   }
 };

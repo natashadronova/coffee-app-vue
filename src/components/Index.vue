@@ -1,8 +1,12 @@
 <template>
   <div class="index container">
-    <table class="highlight responsive-table">
+    <div class="container-fluid" height="80px">
+      <br>
+      <br>
+    </div>
+    <table class="highlight responsive-table centered">
       <thead>
-        <tr>
+        <tr class="brown lighten-2 white-text">
           <th>Ordered?</th>
           <th>Order</th>
           <th>Size</th>
@@ -16,9 +20,8 @@
       <tbody>
         <tr v-for="order in orders" :key="order.id">
           <td>
-            <i v-if="order.orderActive === false" ></i>
-            <i v-if="order.orderActive === true" class="material-icons check_cirlce green">check</i>
-          
+            <i v-if="order.orderActive === false"></i>
+            <i v-if="order.orderActive === true" class="material-icons done light-green-text">check</i>
           </td>
           <td>{{order.drink}}</td>
           <td>{{order.size}}</td>
@@ -31,11 +34,11 @@
           <td>
             <span>
               <router-link :to="{name:'EditOrder', params:{order_slug:order.id}}">
-                <i class="material-icons edit">edit</i>
+                <i class="material-icons edit amber-text darken-3">edit</i>
               </router-link>
             </span>
             <span style="cursor:pointer;">
-              <i class="material-icons delete" @click="deleteOrder(order.id)">delete</i>
+              <i class="material-icons delete deep-orange-text darken-2" @click="deleteOrder(order.id)">delete</i>
             </span>
           </td>
         </tr>
@@ -63,39 +66,31 @@ export default {
   },
   methods: {
     deleteOrder(id) {
-      // this.orders=this.orders.filter(order=>{
-      //   return order.id != id
-      // })
-      //if (firebase.auth().currentUser.uid == 
-      //
-      //check if the current user is the one who ordered
-
       // gets uid of current user
-      let curUser = firebase.auth().currentUser.uid 
-      console.log('cuUser = ', curUser)
-      //query users collection to get user's name
-      db.collection("orders").doc(id).get().then((doc)=>{
-        console.log(doc.data().orderedByID)
-        if(curUser == doc.data().orderedByID) {
-          db.collection("orders")
+      let curUser = firebase.auth().currentUser.uid;
+      console.log("cuUser = ", curUser);
+      //get the order from db
+      db.collection("orders")
         .doc(id)
-        .delete()
-        .then(() => {
-          this.orders = this.orders.filter(order => {
-            return order.id != id;
-          });
+        .get()
+        .then(doc => {
+          // check if current user submitted the order
+          if (curUser == doc.data().orderedByID) {
+            //delete the order if it's his
+            db.collection("orders")
+              .doc(id)
+              .delete()
+              .then(() => {
+                this.orders = this.orders.filter(order => {
+                  return order.id != id;
+                });
+              });
+          } else {
+            //display error message if it's not
+            alert("This order is not yours");
+          }
         });
-        }
-        });
-
-      
-      
     }
-    // moment as a method not working. same with {{moment(date).calendar()}}
-    // why?
-    // moment(date) {
-    //   return moment(date).calendar();
-    // }
   },
   created() {
     console.log("created");
