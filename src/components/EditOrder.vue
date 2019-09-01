@@ -55,7 +55,7 @@
           <div class="input-field col s12">
             <div class="switch">
             <label>
-              <input type="checkbox " v-model="order.orderActive" />
+              <input type="checkbox" v-model="order.orderActive" />
               <span>Make order active</span>
             </label>
           </div>

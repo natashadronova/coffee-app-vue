@@ -6,7 +6,10 @@
         <span class="brand-logo center">CoffeeQuest</span>
         <ul class="right">
           <li v-if="isLoggedIn">
-            <router-link :to="{name: 'Index'}">Home</router-link>
+            <router-link :to="{name: 'Index'}">All Orders</router-link>
+          </li>
+          <li v-if="isLoggedIn">
+            <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
           <li v-if="!isLoggedIn">
             <router-link :to="{name: 'Login'}">Log In</router-link>
