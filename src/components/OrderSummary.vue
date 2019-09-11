@@ -1,7 +1,7 @@
 <template>
   <div>
     <i class="material-icons delete deep-orange-text darken-2" @click="Calculate()">add</i>
-    <table class="highlight responsive-table centered">
+    <table class="highlight responsive-table centered" >
       <thead>
         <tr class="brown lighten-2 white-text">
           <th>Drink</th>
@@ -12,14 +12,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td>{{order.drink}}</td>
-          <td>{{order.size}}</td>
+        <tr v-for="(order, index) in final_order_list" :key="order.concatKey">
+          <!-- :key="order.id" -->
+          <td>{{final_order_list[index].drink}}</td>
+          <td>{{final_order_list[index].size}}</td>
           <td>
-            <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
+            <span
+              v-for="(extra,index) in final_order_list[index].extras"
+              :key="index"
+              class="chip extras"
+            >{{extra}}</span>
           </td>
-          <td>{{order.other}}</td>
-          <td>{{order.length}}</td>
+          <td>{{final_order_list[index].other}}</td>
+          <td>{{final_order_list[index].count}}</td>
         </tr>
       </tbody>
     </table>
@@ -39,8 +44,9 @@ export default {
     };
   },
 
-  methods: {
-    Calculate() {
+  computed:{
+     // create concatenated key to identify same orders
+      final_order_list: function() {
       let orders = this.orders.forEach(order => {
         let key =
           order.drink +
@@ -53,39 +59,52 @@ export default {
         order.concatKey = key;
       });
 
-      //let result = _.chain(this.orders).filter((order) => order.orderActive).groupBy((order)=>`${order.drink}--${order.size}`)
-      //let result = _.chain(this.orders).groupBy((order)=>`${order.drink}--${order.size}`)
-      orders = _.chain(this.orders)._.groupBy(this.orders, "concatKey").forEach(order =>{
-        //order.count = this.order.length
-        console.log(order)
+      this.orders = this.orders.filter(order =>{
+        return order.orderActive
       });
-      console.log(orders)
-      let results = this.orders.forEach(order =>{
-        //order.count = this.order.length
-        console.log(order)
+
+      console.log(this.orders)
+      this.orders.forEach(order => {
+        let order_count = _.countBy(this.orders, "concatKey");
+        order.count = order_count[order.concatKey];
       });
-      //let results = _.mapValues(_.groupBy(this.orders, "drink"), x => x.map(y => _.omit(y, "team") ));
-      console.log(results);
-      //console.log(result)
+
+      let final_order_list = _.uniqBy(this.orders, "concatKey");
+      this.final_order_list = _.orderBy(final_order_list,'count','desc');
+      return this.final_order_list
+      }
+  },
+
+  methods: {
+    Calculate() {
+      // create concatenated key to identify same orders
+      let orders = this.orders.forEach(order => {
+        let key =
+          order.drink +
+          "-" +
+          order.size +
+          "-" +
+          order.extras +
+          "-" +
+          order.other;
+        order.concatKey = key;
+      });
+
+      this.orders = this.orders.filter(order =>{
+        return order.orderActive
+      });
+
+      console.log(this.orders)
+      this.orders.forEach(order => {
+        let order_count = _.countBy(this.orders, "concatKey");
+        order.count = order_count[order.concatKey];
+      });
+
+      let final_order_list = _.uniqBy(this.orders, "concatKey");
+      this.final_order_list = _.orderBy(final_order_list,'count','desc');
+      
+
     }
-    //   let helper = {};
-    //   let result = this.orders.reduce(function(r, o) {
-    //     let key = o.drink + "-" + o.size;
-    //     console.log(key);
-
-    //     if (!helper[key]) {
-    //       helper[key] = Object.assign({}, o); // create a copy of o
-    //       r.push(helper[key]);
-    //     } else {
-    //       helper[key].copies += 1;
-
-    //     };
-
-    //     console.log(r);
-    //     return r;
-    //   }, []);
-    //   console.log(result)
-    // }
   },
 
   created() {
@@ -94,14 +113,13 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          //console.log(doc.data(), doc.id)
           let order = doc.data();
           order.id = doc.id;
           this.orders.push(order);
         });
-      });
+      }).then(this.Calculate());
 
-    //console.log(groupedOrders);
+    
   }
 };
 </script>

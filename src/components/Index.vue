@@ -93,7 +93,7 @@ export default {
     }
   },
   created() {
-    console.log("created");
+    
     //fetch data from the firestore
     db.collection("orders")
       .get()
@@ -105,6 +105,8 @@ export default {
           this.orders.push(order);
         });
       });
+
+      console.log(this.orders)
   }
   // computed properties and lodash framework
 };
