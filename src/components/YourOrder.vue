@@ -79,13 +79,15 @@
 <script>
 import M from "materialize-css";
 import db from "@/firebase/init";
+import firebase from "firebase";
+
 
 export default {
-  name: "EditOrder",
+  name: "YourOrder",
   data() {
     return {
       order: null
-    };
+    }
   },
   methods: {
     EditCoffee() {
@@ -114,23 +116,38 @@ export default {
     }
   },
   created() {
-    db.collection("orders")
-      .doc(this.$route.params.order_slug)
-      .get()
-      .then(doc => {
-        this.order = doc.data();
-        this.order.id = doc.id;
-      });
+
+    // from here and down copied from other pages 
+     // gets uid of current user
+      let curUser = firebase.auth().currentUser.uid;
+      console.log("curUser = ", curUser);
+      //get the order from db
+      db.collection("orders")
+        .doc(id)
+        .get()
+        .then(doc => {
+          // check if current user submitted the order
+          // if (curUser == doc.data().orderedByID) {
+              console.log(doc)
+          // }
+        })
+  
+
+
+
+    // db.collection("orders")
+    //   .doc(this.$route.params.order_slug)
+    //   .get()
+    //   .then(doc => {
+    //     this.order = doc.data();
+    //     this.order.id = doc.id;
+    //   });
   },
+
+
+
   mounted() {
     M.AutoInit();
   }
-};
-</script>
-
-<style scoped>
-/* otherwise this select is not appearing */
-select {
-  display: inline-block;
 }
-</style>
+</script>

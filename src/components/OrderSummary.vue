@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div class='container'>
+    <div class="container-fluid">
     <i class="material-icons delete deep-orange-text darken-2" @click="Calculate()">add</i>
-    <table class="highlight responsive-table centered" >
+    <table class="highlight responsive-table centered " >
       <thead>
         <tr class="brown lighten-2 white-text">
           <th>Drink</th>
@@ -28,6 +29,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </div>
 </template>
 
@@ -40,39 +42,9 @@ export default {
   name: "OrderSummary",
   data() {
     return {
-      orders: []
+      orders: [],
+      final_order_list:[]
     };
-  },
-
-  computed:{
-     // create concatenated key to identify same orders
-      final_order_list: function() {
-      let orders = this.orders.forEach(order => {
-        let key =
-          order.drink +
-          "-" +
-          order.size +
-          "-" +
-          order.extras +
-          "-" +
-          order.other;
-        order.concatKey = key;
-      });
-
-      this.orders = this.orders.filter(order =>{
-        return order.orderActive
-      });
-
-      console.log(this.orders)
-      this.orders.forEach(order => {
-        let order_count = _.countBy(this.orders, "concatKey");
-        order.count = order_count[order.concatKey];
-      });
-
-      let final_order_list = _.uniqBy(this.orders, "concatKey");
-      this.final_order_list = _.orderBy(final_order_list,'count','desc');
-      return this.final_order_list
-      }
   },
 
   methods: {
@@ -103,7 +75,7 @@ export default {
       let final_order_list = _.uniqBy(this.orders, "concatKey");
       this.final_order_list = _.orderBy(final_order_list,'count','desc');
       
-
+      return this.final_order_list
     }
   },
 

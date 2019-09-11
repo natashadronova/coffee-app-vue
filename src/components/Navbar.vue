@@ -3,7 +3,7 @@
     <nav class="nav-wrapper amber darken-3">
       <div class="container-fluid">
         <span v-if="isLoggedIn" class="left">{{currentUser}}</span>
-        <span class="brand-logo center">CoffeeQuest</span>
+        <span class="brand-logo left">CoffeeQuest</span>
         <ul class="right">
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'Index'}">All Orders</router-link>
@@ -11,6 +11,9 @@
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
+          <!-- <li v-if="isLoggedIn">
+            <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
+          </li> -->
           <li v-if="!isLoggedIn">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>

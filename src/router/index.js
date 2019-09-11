@@ -6,6 +6,7 @@ import EditOrder from '@/components/EditOrder'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import OrderSummary from '@/components/OrderSummary'
+//import YourOrder from '@/components/YourOrder'
 import firebase from 'firebase';
 
 Vue.use(Router)
@@ -40,6 +41,15 @@ let router =  new Router({
         requiresAuth:true
       }
     },
+
+    // {
+    //   path: '/your-order',
+    //   name: 'YourOrder',
+    //   component: YourOrder,
+    //   meta:{
+    //     requiresAuth:true
+    //   }
+    // },
 
     {
       path:'/edit-order/:order_slug',
