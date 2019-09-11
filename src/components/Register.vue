@@ -54,6 +54,7 @@ export default {
 
         .then(
           cred => {
+            console.log(cred.user.uid)
             this.$router.go({ path: this.$router.path });
             return db.collection('users').doc(cred.user.uid).set({
               name: this.name,

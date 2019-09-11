@@ -54,11 +54,13 @@ export default {
       this.isLoggedIn = true;
       // gets uid of current user
       let currUser = firebase.auth().currentUser.uid;
+      console.log(currUser)
       //query users collection to get user's name
       db.collection("users")
         .doc(currUser)
         .get()
         .then(doc => {
+          console.log(doc)
           this.currentUser = doc.data().name + " " + doc.data().lastname;
         });
     }
