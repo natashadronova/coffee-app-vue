@@ -81,7 +81,7 @@ export default {
 
   created() {
     //get all orders
-    db.collection("orders")
+    db.collection("users")
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {

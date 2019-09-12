@@ -59,7 +59,14 @@ export default {
             return db.collection('users').doc(cred.user.uid).set({
               name: this.name,
               lastname:this.lastname,
-              email: this.email
+              email: this.email,
+              drink: '',
+              extras:[],
+              orderActive:false,
+              orderTime:'',
+              orderedBy:'',
+              other:'',
+              size:''
             });
             
           },

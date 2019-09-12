@@ -14,7 +14,7 @@
           <th>Other</th>
           <th>Date Ordered</th>
           <th>Ordered by</th>
-          <th>Edit / Delete</th>
+          <!-- <th>Edit / Delete</th> -->
         </tr>
       </thead>
       <tbody>
@@ -30,8 +30,8 @@
           </td>
           <td>{{order.other}}</td>
           <td>{{order.orderTime | moment }}</td>
-          <td>{{order.orderedBy}}</td>
-          <td>
+          <td>{{order.name}}</td>
+          <!-- <td>
             <span>
               <router-link :to="{name:'EditOrder', params:{order_slug:order.id}}">
                 <i class="material-icons edit amber-text darken-3">edit</i>
@@ -40,7 +40,7 @@
             <span style="cursor:pointer;">
               <i class="material-icons delete deep-orange-text darken-2" @click="deleteOrder(order.id)">delete</i>
             </span>
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
@@ -95,7 +95,7 @@ export default {
   created() {
     
     //fetch data from the firestore
-    db.collection("orders")
+    db.collection("users")
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {

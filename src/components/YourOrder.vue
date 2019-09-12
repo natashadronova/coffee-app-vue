@@ -2,9 +2,9 @@
   <div  class="edit-order container"> 
     <!-- v-if="order" -->
     
-    <h2>Edit Order</h2>
-    <!-- <div class="row">
-      <form class="col s12 selectEdit" @submit.prevent="EditCoffee">
+    <h2>Your Order</h2>
+    <div class="row">
+      <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
         <div class="input-field col s12">
           <select v-model="order.drink">
             <option value disabled selected>Coffee</option>
@@ -73,7 +73,7 @@
           </div>
         </div>
       </form>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -92,58 +92,48 @@ export default {
     }
   },
 
-  // methods: {
-  //   EditCoffee() {
-  //     console.log(this.order.drink);
-  //     if (this.order.drink) {
-  //       this.feedback = null;
-  //       db.collection("orders")
-  //         .doc(this.order.id)
-  //         .update({
-  //           drink: this.order.drink,
-  //           size: this.order.size,
-  //           extras: this.order.extras,
-  //           other: this.order.other,
-  //           orderActive: this.order.orderActive,
-  //           orderTime: Date.now()
-  //         })
-  //         .then(() => {
-  //           this.$router.push({ name: "Index" });
-  //         })
-  //         .catch(err => {
-  //           console.log(err);
-  //         });
-  //     } else {
-  //       this.feedback = "You must add a coffee to your order";
-  //     }
-  //   }
-  // },
+  methods: {
+    EditCoffee() {
+      console.log(this.order.drink);
+      if (this.order.drink) {
+        this.feedback = null;
+        db.collection("users")
+          .doc(this.order.id)
+          .update({
+            drink: this.order.drink,
+            size: this.order.size,
+            extras: this.order.extras,
+            other: this.order.other,
+            orderActive: this.order.orderActive,
+            orderTime: Date.now()
+          })
+          .then(() => {
+            this.$router.push({ name: "Index" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else {
+        this.feedback = "You must add a coffee to your order";
+      }
+    }
+  },
+
   created() {
         console.log('created')
     
       let curUser = firebase.auth().currentUser.uid;
       console.log("curUser = ", curUser);
       //get the order from db
-      db.collection("orders")
-        .doc(id)
+      db.collection("users")
+        .doc(curUser)
         .get()
         .then(doc => {
-          // check if current user submitted the order
-          // if (curUser == doc.data().orderedByID) {
               console.log(doc)
-          // }
+              this.order = doc.data();
+              this.order.id = doc.id;
+              console.log(this.order)
         })
-  
-
-
-
-    db.collection("orders")
-      .doc(this.$route.params.order_slug)
-      .get()
-      .then(doc => {
-        this.order = doc.data();
-        this.order.id = doc.id;
-      });
   },
 
 
@@ -155,5 +145,7 @@ export default {
 </script>
 
 <style>
-
+select {
+  display: inline-block;
+}
 </style>

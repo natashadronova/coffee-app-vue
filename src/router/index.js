@@ -97,7 +97,7 @@ router.beforeEach((to,from,next)=>{
           redirect: to.fullPath
         }
       });
-    } else {
+    } else { 
       // Proceed to route
       next();
     }
