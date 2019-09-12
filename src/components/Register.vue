@@ -63,7 +63,7 @@ export default {
               drink: '',
               extras:[],
               orderActive:false,
-              orderTime:'',
+              orderTime:Date.now(),
               orderedBy:'',
               other:'',
               size:''

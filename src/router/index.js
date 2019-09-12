@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
-import AddOrder from '@/components/AddOrder'
-import EditOrder from '@/components/EditOrder'
+// import AddOrder from '@/components/AddOrder'
+// import EditOrder from '@/components/EditOrder'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import OrderSummary from '@/components/OrderSummary'
@@ -14,14 +14,14 @@ Vue.use(Router)
 let router =  new Router({
   routes: [
    
-    {
-      path:'/add-order',
-      name:'AddOrder',
-      component: AddOrder,
-      meta:{
-        requiresAuth:true
-      }
-    },
+    // {
+    //   path:'/add-order',
+    //   name:'AddOrder',
+    //   component: AddOrder,
+    //   meta:{
+    //     requiresAuth:true
+    //   }
+    // },
    
    
     {
@@ -51,14 +51,14 @@ let router =  new Router({
       }
     },
 
-    {
-      path:'/edit-order/:order_slug',
-      name:'EditOrder',
-      component: EditOrder,
-      meta:{
-        requiresAuth:true
-      }
-    },
+    // {
+    //   path:'/edit-order/:order_slug',
+    //   name:'EditOrder',
+    //   component: EditOrder,
+    //   meta:{
+    //     requiresAuth:true
+    //   }
+    // },
 
     {
       path:'/login',

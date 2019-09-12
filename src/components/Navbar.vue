@@ -11,9 +11,9 @@
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
-          <li v-if="isLoggedIn">
+          <!-- <li v-if="isLoggedIn">
             <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
-          </li>
+          </li> -->
           <li v-if="!isLoggedIn">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
@@ -24,7 +24,7 @@
             <a v-on:click="Logout">Log Out</a>
           </li>
           <li v-if="isLoggedIn">
-            <router-link :to="{ name: 'AddOrder'}">
+            <router-link :to="{ name: 'YourOrder'}">
               <a class="btn-floating btn-large waves-effect waves-light white">
                 <i class="material-icons amber-text text-darken-3">add</i>
               </a>

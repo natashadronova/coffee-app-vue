@@ -94,11 +94,11 @@ export default {
 
   methods: {
     EditCoffee() {
-      console.log(this.order.drink);
+       let curUser = firebase.auth().currentUser.uid;
       if (this.order.drink) {
         this.feedback = null;
         db.collection("users")
-          .doc(this.order.id)
+          .doc(curUser)
           .update({
             drink: this.order.drink,
             size: this.order.size,
@@ -131,8 +131,8 @@ export default {
         .then(doc => {
               console.log(doc)
               this.order = doc.data();
-              this.order.id = doc.id;
-              console.log(this.order)
+              //this.order.id = doc.id;
+              //console.log(this.order)
         })
   },
 
