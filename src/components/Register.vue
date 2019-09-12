@@ -60,13 +60,13 @@ export default {
               name: this.name,
               lastname:this.lastname,
               email: this.email,
-              drink: '',
-              extras:[],
-              orderActive:false,
-              orderTime:Date.now(),
-              orderedBy:'',
-              other:'',
-              size:''
+              // drink: 'Coffee',
+              // extras:[],
+              // orderActive:false,
+              // orderTime:Date.now(),
+              // orderedBy:'',
+              // other:'',
+              // size:''
             });
             
           },
