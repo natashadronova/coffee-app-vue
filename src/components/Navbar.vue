@@ -11,9 +11,9 @@
           <li v-if="isLoggedIn">
             <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
-          <!-- <li v-if="isLoggedIn">
+          <li v-if="isLoggedIn">
             <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
-          </li> -->
+          </li>
           <li v-if="!isLoggedIn">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>

@@ -1,7 +1,9 @@
 <template>
-  <div v-if="order" class="edit-order container">
+  <div  class="edit-order container"> 
+    <!-- v-if="order" -->
+    
     <h2>Edit Order</h2>
-    <div class="row">
+    <!-- <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee">
         <div class="input-field col s12">
           <select v-model="order.drink">
@@ -71,7 +73,7 @@
           </div>
         </div>
       </form>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -89,36 +91,36 @@ export default {
       order: null
     }
   },
-  methods: {
-    EditCoffee() {
-      console.log(this.order.drink);
-      if (this.order.drink) {
-        this.feedback = null;
-        db.collection("orders")
-          .doc(this.order.id)
-          .update({
-            drink: this.order.drink,
-            size: this.order.size,
-            extras: this.order.extras,
-            other: this.order.other,
-            orderActive: this.order.orderActive,
-            orderTime: Date.now()
-          })
-          .then(() => {
-            this.$router.push({ name: "Index" });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      } else {
-        this.feedback = "You must add a coffee to your order";
-      }
-    }
-  },
-  created() {
 
-    // from here and down copied from other pages 
-     // gets uid of current user
+  // methods: {
+  //   EditCoffee() {
+  //     console.log(this.order.drink);
+  //     if (this.order.drink) {
+  //       this.feedback = null;
+  //       db.collection("orders")
+  //         .doc(this.order.id)
+  //         .update({
+  //           drink: this.order.drink,
+  //           size: this.order.size,
+  //           extras: this.order.extras,
+  //           other: this.order.other,
+  //           orderActive: this.order.orderActive,
+  //           orderTime: Date.now()
+  //         })
+  //         .then(() => {
+  //           this.$router.push({ name: "Index" });
+  //         })
+  //         .catch(err => {
+  //           console.log(err);
+  //         });
+  //     } else {
+  //       this.feedback = "You must add a coffee to your order";
+  //     }
+  //   }
+  // },
+  created() {
+        console.log('created')
+    
       let curUser = firebase.auth().currentUser.uid;
       console.log("curUser = ", curUser);
       //get the order from db
@@ -135,13 +137,13 @@ export default {
 
 
 
-    // db.collection("orders")
-    //   .doc(this.$route.params.order_slug)
-    //   .get()
-    //   .then(doc => {
-    //     this.order = doc.data();
-    //     this.order.id = doc.id;
-    //   });
+    db.collection("orders")
+      .doc(this.$route.params.order_slug)
+      .get()
+      .then(doc => {
+        this.order = doc.data();
+        this.order.id = doc.id;
+      });
   },
 
 
@@ -151,3 +153,7 @@ export default {
   }
 }
 </script>
+
+<style>
+
+</style>
