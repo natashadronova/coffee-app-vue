@@ -61,11 +61,11 @@ export default {
                 lastname: this.lastname,
                 email: this.email
               })
-              .then(function() {
+              .then(() => {
                 this.$router.go({ path: this.$router.path });
                 console.log("User created.");
               })
-              .catch(function(error) {
+              .catch((error) => {
                 console.error("Error creating user: ", error);
               });
             console.log(cred.user.uid);

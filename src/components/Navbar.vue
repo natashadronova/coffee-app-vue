@@ -2,7 +2,7 @@
   <div class="navbar">
     <nav class="nav-wrapper amber darken-3">
       <div class="container-fluid">
-        <span class="brand-logo">CoffeeQuest</span>
+        <span class="logo">CoffeeQuest</span>
         <div
           v-if="vueRoot.userData"
           class="user-name"
@@ -27,7 +27,6 @@
           <li v-if="isLoggedIn" class="hidden-sm">
             <a v-on:click="Logout">Log Out</a>
           </li>
-
           <li class="hidden-md">
             <a class="dropdown-trigger btn" href="#" data-target="menu-dropdown">Menu</a>
 
@@ -128,10 +127,11 @@ export default {
   bottom: -12px;
   font-size: 12px;
 }
-nav .brand-logo {
+.logo {
   font-size: 20px;
+  position: absolute;
+  top: -8px;
   font-weight: bold;
-  line-height: 48px;
 }
 .nav-wrapper {
   position: relative;

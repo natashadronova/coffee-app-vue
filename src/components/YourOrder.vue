@@ -2,7 +2,7 @@
   <div class="edit-order container">
     <!-- v-if="order" -->
 
-    <h2>Your Order</h2>
+    <h2>Add Order</h2>
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
         <div class="input-field col s12">
@@ -59,14 +59,14 @@
           />
         </div>
 
-        <div class="input-field col s12">
+        <!-- <div class="input-field col s12">
           <div class="switch">
             <label>
               <input type="checkbox" v-model="order.orderActive" />
               <span>Make order active</span>
             </label>
           </div>
-        </div>
+        </div>-->
         <div class="input-field col s12">
           <div class="field center-align">
             <button class="btn amber darken-3">Update Order</button>
@@ -99,7 +99,7 @@ export default {
     // Just to make referencing to variables cleaner
     vueRoot() {
       return this.$root;
-    },
+    }
   },
   methods: {
     EditCoffee() {
@@ -113,7 +113,25 @@ export default {
             size: this.order.size,
             extras: this.order.extras,
             other: this.order.other,
-            orderActive: this.order.orderActive,
+            //orderActive: this.order.orderActive,
+            //orderTime: Date.now()
+          })
+          .then(() => {
+            this.$router.push({ name: "Index" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
+        db.collection("orders")
+          .doc(curUser)
+          .set({
+            name: this.vueRoot.userData.name,
+            drink: this.order.drink,
+            size: this.order.size,
+            extras: this.order.extras,
+            other: this.order.other,
+            //orderActive: this.order.orderActive,
             orderTime: Date.now()
           })
           .then(() => {
@@ -129,31 +147,51 @@ export default {
   },
 
   mounted() {
-    
-    // we already have the data so we can populate it
+    if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
 
-    if (this.vueRoot.userData.orderActive) {
-      this.order.orderActive = this.vueRoot.userData.orderActive;
-    }
+      /* if (this.vueRoot.orderData.orderActive) {
+        this.order.orderActive = this.vueRoot.orderData.orderActive;
+      } */
 
-    if (this.vueRoot.userData.drink) {
-      this.order.drink = this.vueRoot.userData.drink;
-    }
+      if (this.vueRoot.orderData.drink) {
+        this.order.drink = this.vueRoot.orderData.drink;
+      }
 
-    if (this.vueRoot.userData.size) {
-      this.order.size = this.vueRoot.userData.size;
-    }
+      if (this.vueRoot.orderData.size) {
+        this.order.size = this.vueRoot.orderData.size;
+      }
 
-    if (this.vueRoot.userData.extras) {
-      this.order.extras = this.vueRoot.userData.extras;
-    }
+      if (this.vueRoot.orderData.extras) {
+        this.order.extras = this.vueRoot.orderData.extras;
+      }
 
-    if (this.vueRoot.userData.other) {
-      this.order.other = this.vueRoot.userData.other;
+      if (this.vueRoot.orderData.other) {
+        this.order.other = this.vueRoot.orderData.other;
+      }
+    } else {
+      
+      /* if (this.vueRoot.userData.orderActive) {
+        this.order.orderActive = this.vueRoot.userData.orderActive;
+      } */
+
+      if (this.vueRoot.userData.drink) {
+        this.order.drink = this.vueRoot.userData.drink;
+      }
+
+      if (this.vueRoot.userData.size) {
+        this.order.size = this.vueRoot.userData.size;
+      }
+
+      if (this.vueRoot.userData.extras) {
+        this.order.extras = this.vueRoot.userData.extras;
+      }
+
+      if (this.vueRoot.userData.other) {
+        this.order.other = this.vueRoot.userData.other;
+      }
     }
 
     M.AutoInit();
-
-  },
+  }
 };
 </script>

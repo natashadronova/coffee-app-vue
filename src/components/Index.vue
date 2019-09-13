@@ -4,33 +4,33 @@
       <br>
       <br>
     </div>
-    <table class="highlight responsive-table centered">
+    <table class="highlight centered">
       <thead>
         <tr class="brown lighten-2 white-text">
-          <th>Ordered?</th>
+          <!-- <th>Ordered?</th> -->
           <th>Order</th>
           <th>Size</th>
           <th>Extras</th>
           <th>Other</th>
-          <th>Date Ordered</th>
-          <th>Ordered by</th>
+          <th class="hidden-sm">Date Ordered</th>
+          <th class="hidden-sm">Ordered by</th>
           <!-- <th>Edit / Delete</th> -->
         </tr>
       </thead>
       <tbody>
         <tr v-for="order in orders" :key="order.id">
-          <td>
+          <!-- <td>
             <i v-if="order.orderActive === false"></i>
             <i v-if="order.orderActive === true" class="material-icons done light-green-text">check</i>
-          </td>
+          </td> -->
           <td>{{order.drink}}</td>
           <td>{{order.size}}</td>
           <td>
             <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
           </td>
           <td>{{order.other}}</td>
-          <td>{{order.orderTime | moment }}</td>
-          <td>{{order.name}}</td>
+          <td class="hidden-sm">{{order.orderTime | moment }}</td>
+          <td class="hidden-sm">{{order.name}}</td>
           <!-- <td>
             <span>
               <router-link :to="{name:'EditOrder', params:{order_slug:order.id}}">
@@ -104,7 +104,7 @@ export default {
   created() {
     
     //fetch data from the firestore
-    db.collection("users")
+    db.collection("orders")
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {

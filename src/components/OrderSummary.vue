@@ -63,9 +63,9 @@ export default {
         order.concatKey = key;
       });
 
-      this.orders = this.orders.filter(order => {
+      /* this.orders = this.orders.filter(order => {
         return order.orderActive;
-      });
+      }); */
 
       console.log(this.orders);
       this.orders.forEach(order => {
@@ -82,7 +82,7 @@ export default {
   mounted() {
     //this.Calculate();
     //get all orders
-    db.collection("users")
+    db.collection("orders")
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {

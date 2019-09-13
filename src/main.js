@@ -22,16 +22,25 @@ firebase.auth().onAuthStateChanged(user => {
           App
         },
         mounted() {
-          // Get userData
+
           if (user) {
-            let userRef = db.collection("users").doc(user.uid);
             let that = this;
+
+            // Get userData
             this.auth = user;
+            let userRef = db.collection("users").doc(user.uid);
             userRef.onSnapshot(function (doc) {
               const userData = doc.data();
               that.userData = userData;
               that.admin = userData.admin;
-              console.log(that.userData)
+              console.log("userdata " + that.userData)
+            });
+
+            let orderRef = db.collection("orders").doc(user.uid);
+            orderRef.onSnapshot(function (doc) {
+              const orderData = doc.data();
+              that.orderData = orderData;
+              console.log("order " + that.orderData)
             });
           }
         },
@@ -39,6 +48,7 @@ firebase.auth().onAuthStateChanged(user => {
           return {
             auth: null,
             userData: null,
+            orderData: null,
             admin: false
           }
         },
