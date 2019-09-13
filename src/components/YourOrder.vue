@@ -17,6 +17,7 @@
             <option value="Dirty Chai Latte">Dirty Chai Latte</option>
             <option value="Piccolo">Piccolo</option>
             <option value="Cappucino">Cappucino</option>
+            <option value="Other">Other (Juice / Tea - specify in text field)</option>
           </select>
         </div>
 

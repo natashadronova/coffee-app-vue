@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <!-- <i class="material-icons delete deep-orange-text darken-2">add</i> -->
     
-      <table class="highlight responsive-table centered">
+      <table class="highlight centered">
         <thead>
           <tr class="brown lighten-2 white-text">
             <th>Drink</th>
@@ -30,7 +30,13 @@
           </tr>
         </tbody>
       </table>
+      
     </div>
+    <div class="field center-align page-footer">
+    <button v-if="vueRoot.admin" class="hidden-sm btn amber darken-3 centered" v-on:click="ClearOrders">
+            Clear Orders Forever
+          </button>
+          </div>
   </div>
 </template>
 
@@ -46,6 +52,12 @@ export default {
       orders: [],
       final_order_list: []
     };
+  },
+  computed: {
+    // Just to make referencing to variables cleaner
+    vueRoot() {
+      return this.$root;
+    }
   },
 
   methods: {
@@ -77,6 +89,10 @@ export default {
       this.final_order_list = _.orderBy(final_order_list, "count", "desc");
 
       return this.final_order_list;
+    },
+
+    ClearOrders: function() {
+      console.log("cleared");
     }
   },
   mounted() {
@@ -98,5 +114,18 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.page-footer{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+padding-bottom: 10px;
+}
+
+.container-fluid {
+  margin-top: 20px;
+}
+
+
 </style>

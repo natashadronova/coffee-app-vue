@@ -15,9 +15,13 @@
           <li v-if="isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
-          <!-- <li v-if="isLoggedIn">
-            <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
-          </li> -->
+          <li v-if="isLoggedIn && vueRoot.orderData " class="hidden-sm">
+            <router-link :to="{ name: 'YourOrder'}">Edit Order</router-link>
+          </li>
+          <li v-if="isLoggedIn && !vueRoot.orderData " class="hidden-sm">
+            <router-link :to="{ name: 'YourOrder'}">Add Order</router-link>
+          </li>
+
           <li v-if="!isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
@@ -31,28 +35,29 @@
             <a class="dropdown-trigger btn" href="#" data-target="menu-dropdown">Menu</a>
 
             <ul id="menu-dropdown" class="dropdown-content">
-              <li>
-                <a href="#!">All orders</a>
-              </li>
-              <li>
-                <a href="#!">My order</a>
-              </li>
-              <li>
-                <a href="#!">Log out</a>
-              </li>
-              
-            </ul>
+              <li v-if="isLoggedIn" class="hidden-sm">
+            <router-link :to="{name: 'Index'}">All Orders</router-link>
+          </li>
+          <li v-if="isLoggedIn">
+            <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
+          </li>
+          <li v-if="isLoggedIn && vueRoot.orderData " >
+            <router-link :to="{ name: 'YourOrder'}">Edit Order</router-link>
+          </li>
+          <li v-if="isLoggedIn && !vueRoot.orderData " >
+            <router-link :to="{ name: 'YourOrder'}">Add Order</router-link>
           </li>
 
-          <li v-if="isLoggedIn">
-            <router-link :to="{ name: 'YourOrder'}">
-              <a class="btn-floating btn-large waves-effect waves-light white">
-                <i class="material-icons amber-text text-darken-3">add</i>
-              </a>
-            </router-link>
+          <li v-if="!isLoggedIn" >
+            <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
-          <li v-if="vueRoot.admin" class="hidden-sm">
-            <a v-on:click="ClearOrders">Clear Orders</a>
+          <li v-if="!isLoggedIn" >
+            <router-link :to="{name: 'Register'}">Register</router-link>
+          </li>
+          <li v-if="isLoggedIn" >
+            <a v-on:click="Logout">Log Out</a>
+          </li>
+            </ul>
           </li>
         </ul>
       </div>
@@ -104,12 +109,10 @@ export default {
         .then(() => {
           this.$router.go({ path: this.$router.path });
         });
+    },
+    ClearOrders: function() {
+      console.log("cleared");
     }
-    ,
-    ClearOrders: function(){
-      console.log('cleared')
-    }
-
   },
   mounted() {
     M.AutoInit();
