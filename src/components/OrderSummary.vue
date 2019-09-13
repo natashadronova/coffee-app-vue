@@ -1,33 +1,38 @@
 <template>
-  <div class='container'>
+  <div class="container">
     <div class="container-fluid">
-    <table class="highlight responsive-table centered " >
-      <thead>
-        <tr class="brown lighten-2 white-text">
-          <th>Drink</th>
-          <th>Size</th>
-          <th>Extras</th>
-          <th>Other</th>
-          <th>Count</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(order, index) in final_order_list" :key="order.concatKey">
-          <!-- :key="order.id" -->
-          <td>{{final_order_list[index].drink}}</td>
-          <td>{{final_order_list[index].size}}</td>
-          <td>
-            <span
-              v-for="(extra,index) in final_order_list[index].extras"
-              :key="index"
-              class="chip extras"
-            >{{extra}}</span>
-          </td>
-          <td>{{final_order_list[index].other}}</td>
-          <td>{{final_order_list[index].count}}</td>
-        </tr>
-      </tbody>
-    </table>
+      <<<<<<< HEAD
+      =======
+      <i class="material-icons delete deep-orange-text darken-2">add</i>
+      <!-- @click="Calculate() -->
+      >>>>>>> 4c4e4dbb2f35330a5504e10c17e8e0dd2c8a834f
+      <table class="highlight responsive-table centered">
+        <thead>
+          <tr class="brown lighten-2 white-text">
+            <th>Drink</th>
+            <th>Size</th>
+            <th>Extras</th>
+            <th>Other</th>
+            <th>Count</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(order, index) in final_order_list" :key="order.concatKey">
+            <!-- :key="order.id" -->
+            <td>{{final_order_list[index].drink}}</td>
+            <td>{{final_order_list[index].size}}</td>
+            <td>
+              <span
+                v-for="(extra,index) in final_order_list[index].extras"
+                :key="index"
+                class="chip extras"
+              >{{extra}}</span>
+            </td>
+            <td>{{final_order_list[index].other}}</td>
+            <td>{{final_order_list[index].count}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -42,7 +47,7 @@ export default {
   data() {
     return {
       orders: [],
-      final_order_list:[]
+      final_order_list: []
     };
   },
 
@@ -61,20 +66,20 @@ export default {
         order.concatKey = key;
       });
 
-      this.orders = this.orders.filter(order =>{
-        return order.orderActive
+      this.orders = this.orders.filter(order => {
+        return order.orderActive;
       });
 
-      console.log(this.orders)
+      console.log(this.orders);
       this.orders.forEach(order => {
         let order_count = _.countBy(this.orders, "concatKey");
         order.count = order_count[order.concatKey];
       });
 
       let final_order_list = _.uniqBy(this.orders, "concatKey");
-      this.final_order_list = _.orderBy(final_order_list,'count','desc');
-      
-      return this.final_order_list
+      this.final_order_list = _.orderBy(final_order_list, "count", "desc");
+
+      return this.final_order_list;
     }
   },
   mounted() {
