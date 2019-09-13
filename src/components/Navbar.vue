@@ -2,27 +2,48 @@
   <div class="navbar">
     <nav class="nav-wrapper amber darken-3">
       <div class="container-fluid">
-        <span v-if="isLoggedIn" class="left">{{currentUser}}</span>
-        <span class="brand-logo left">CoffeeQuest</span>
+        <span class="brand-logo">CoffeeQuest</span>
+        <div
+          v-if="vueRoot.userData"
+          class="user-name"
+        >{{vueRoot.userData.name}} {{vueRoot.userData.lastname}}</div>
+
         <ul class="right">
-          <li v-if="isLoggedIn">
+          <li v-if="isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Index'}">All Orders</router-link>
           </li>
-          <li v-if="isLoggedIn">
+          <li v-if="isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
           </li>
           <!-- <li v-if="isLoggedIn">
             <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
-          </li> -->
-          <li v-if="!isLoggedIn">
+          </li>-->
+          <li v-if="!isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
-          <li v-if="!isLoggedIn">
+          <li v-if="!isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Register'}">Register</router-link>
           </li>
-          <li v-if="isLoggedIn">
+          <li v-if="isLoggedIn" class="hidden-sm">
             <a v-on:click="Logout">Log Out</a>
           </li>
+
+          <li class="hidden-md">
+            <a class="dropdown-trigger btn" href="#" data-target="menu-dropdown">Menu</a>
+
+            <ul id="menu-dropdown" class="dropdown-content">
+              <li>
+                <a href="#!">All orders</a>
+              </li>
+              <li>
+                <a href="#!">My order</a>
+              </li>
+              <li>
+                <a href="#!">Log out</a>
+              </li>
+            </ul>
+          </li>
+
           <li v-if="isLoggedIn">
             <router-link :to="{ name: 'YourOrder'}">
               <a class="btn-floating btn-large waves-effect waves-light white">
@@ -49,11 +70,17 @@ export default {
       currentUser: ""
     };
   },
+  computed: {
+    // Just to make referencing to variables cleaner
+    vueRoot() {
+      return this.$root;
+    }
+  },
   created() {
     if (firebase.auth().currentUser) {
       this.isLoggedIn = true;
       // gets uid of current user
-      let currUser = firebase.auth().currentUser.uid;
+      /* let currUser = firebase.auth().currentUser.uid;
       console.log(currUser)
       //query users collection to get user's name
       db.collection("users")
@@ -62,7 +89,7 @@ export default {
         .then(doc => {
           console.log(doc)
           this.currentUser = doc.data().name + " " + doc.data().lastname;
-        });
+        }); */
     }
   },
   methods: {
@@ -74,6 +101,9 @@ export default {
           this.$router.go({ path: this.$router.path });
         });
     }
+  },
+  mounted() {
+    M.AutoInit();
   }
 };
 </script>
@@ -82,5 +112,28 @@ export default {
 <style>
 .navbar nav {
   padding: 0 20px;
+}
+.user-name {
+  position: absolute;
+  bottom: -12px;
+  font-size: 12px;
+}
+nav .brand-logo {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 48px;
+}
+.nav-wrapper {
+  position: relative;
+}
+@media screen and (min-width: 768px) {
+  .hidden-md {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .hidden-sm {
+    display: none !important;
+  }
 }
 </style>

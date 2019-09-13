@@ -42,7 +42,7 @@ export default {
       email: "",
       password: "",
       name: "",
-      lastname:''
+      lastname: ""
     };
   },
 
@@ -54,21 +54,26 @@ export default {
 
         .then(
           cred => {
-            console.log(cred.user.uid)
-            this.$router.go({ path: this.$router.path });
-            return db.collection('users').doc(cred.user.uid).set({
-              name: this.name,
-              lastname:this.lastname,
-              email: this.email,
-              drink: '',
-              extras:[],
-              orderActive:false,
-              orderTime:Date.now(),
-              orderedBy:'',
-              other:'',
-              size:''
-            });
-            
+            db.collection("users")
+              .doc(cred.user.uid)
+              .set({
+                name: this.name,
+                lastname: this.lastname,
+                email: this.email
+              })
+              .then(function() {
+                this.$router.go({ path: this.$router.path });
+                console.log("User created.");
+              })
+              .catch(function(error) {
+                console.error("Error creating user: ", error);
+              });
+            console.log(cred.user.uid);
+            //this.$router.go({ path: this.$router.path });
+            /* return db
+              .collection("users")
+              .doc(cred.user.uid)
+              .set({}); */
           },
           err => {
             alert(err.message);

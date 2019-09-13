@@ -59,10 +59,19 @@ export default {
       orders: []
     };
   },
+  computed: {
+    // Just to make referencing to variables cleaner
+    vueRoot() {
+      return this.$root;
+    },
+  },
   filters: {
     moment: function(date) {
       return moment(date).calendar();
     }
+  },
+  mounted() {
+    console.log(this.$root.userData);
   },
   methods: {
     deleteOrder(id) {

@@ -1,7 +1,6 @@
 <template>
   <div class='container'>
     <div class="container-fluid">
-    <i class="material-icons delete deep-orange-text darken-2" @click="Calculate()">add</i>
     <table class="highlight responsive-table centered " >
       <thead>
         <tr class="brown lighten-2 white-text">
@@ -78,8 +77,8 @@ export default {
       return this.final_order_list
     }
   },
-
-  created() {
+  mounted() {
+    //this.Calculate();
     //get all orders
     db.collection("users")
       .get()
@@ -89,9 +88,8 @@ export default {
           order.id = doc.id;
           this.orders.push(order);
         });
-      }).then(this.Calculate());
-
-    
+        this.Calculate();
+      });
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
-  <div  class="edit-order container"> 
+  <div class="edit-order container">
     <!-- v-if="order" -->
-    
+
     <h2>Your Order</h2>
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
@@ -83,18 +83,27 @@ import M from "materialize-css";
 import db from "@/firebase/init";
 import firebase from "firebase";
 
-
 export default {
   name: "YourOrder",
   data() {
     return {
-      order: null
-    }
+      order: {
+        drink: null,
+        size: null,
+        extras: [],
+        other: null
+      }
+    };
   },
-
+  computed: {
+    // Just to make referencing to variables cleaner
+    vueRoot() {
+      return this.$root;
+    },
+  },
   methods: {
     EditCoffee() {
-       let curUser = firebase.auth().currentUser.uid;
+      let curUser = firebase.auth().currentUser.uid;
       if (this.order.drink) {
         this.feedback = null;
         db.collection("users")
@@ -119,33 +128,32 @@ export default {
     }
   },
 
-  created() {
-        console.log('created')
-    
-      let curUser = firebase.auth().currentUser.uid;
-      console.log("curUser = ", curUser);
-      //get the order from db
-      db.collection("users")
-        .doc(curUser)
-        .get()
-        .then(doc => {
-              console.log(doc)
-              this.order = doc.data();
-              //this.order.id = doc.id;
-              //console.log(this.order)
-        })
-  },
-
-
-
   mounted() {
-    M.AutoInit();
-  }
-}
-</script>
+    
+    // we already have the data so we can populate it
 
-<style>
-select {
-  display: inline-block;
-}
-</style>
+    if (this.vueRoot.userData.orderActive) {
+      this.order.orderActive = this.vueRoot.userData.orderActive;
+    }
+
+    if (this.vueRoot.userData.drink) {
+      this.order.drink = this.vueRoot.userData.drink;
+    }
+
+    if (this.vueRoot.userData.size) {
+      this.order.size = this.vueRoot.userData.size;
+    }
+
+    if (this.vueRoot.userData.extras) {
+      this.order.extras = this.vueRoot.userData.extras;
+    }
+
+    if (this.vueRoot.userData.other) {
+      this.order.other = this.vueRoot.userData.other;
+    }
+
+    M.AutoInit();
+
+  },
+};
+</script>
