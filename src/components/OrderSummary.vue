@@ -1,11 +1,8 @@
 <template>
   <div class="container">
     <div class="container-fluid">
-      <<<<<<< HEAD
-      =======
-      <i class="material-icons delete deep-orange-text darken-2">add</i>
-      <!-- @click="Calculate() -->
-      >>>>>>> 4c4e4dbb2f35330a5504e10c17e8e0dd2c8a834f
+      <!-- <i class="material-icons delete deep-orange-text darken-2">add</i> -->
+    
       <table class="highlight responsive-table centered">
         <thead>
           <tr class="brown lighten-2 white-text">
@@ -95,6 +92,8 @@ export default {
         });
         this.Calculate();
       });
+
+      console.log(this.$root.admin)
   }
 };
 </script>

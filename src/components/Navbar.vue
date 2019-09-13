@@ -17,7 +17,7 @@
           </li>
           <!-- <li v-if="isLoggedIn">
             <router-link :to="{name: 'YourOrder'}">Your Order</router-link>
-          </li>-->
+          </li> -->
           <li v-if="!isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
@@ -41,6 +41,7 @@
               <li>
                 <a href="#!">Log out</a>
               </li>
+              
             </ul>
           </li>
 
@@ -50,6 +51,9 @@
                 <i class="material-icons amber-text text-darken-3">add</i>
               </a>
             </router-link>
+          </li>
+          <li v-if="vueRoot.admin" class="hidden-sm">
+            <a v-on:click="ClearOrders">Clear Orders</a>
           </li>
         </ul>
       </div>
@@ -61,6 +65,7 @@
 <script>
 import firebase from "firebase";
 import db from "@/firebase/init";
+//import func from '../../vue-temp/vue-editor-bridge';
 
 export default {
   name: "Navbar",
@@ -101,6 +106,11 @@ export default {
           this.$router.go({ path: this.$router.path });
         });
     }
+    ,
+    ClearOrders: function(){
+      console.log('cleared')
+    }
+
   },
   mounted() {
     M.AutoInit();

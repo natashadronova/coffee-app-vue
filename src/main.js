@@ -30,6 +30,8 @@ firebase.auth().onAuthStateChanged(user => {
             userRef.onSnapshot(function (doc) {
               const userData = doc.data();
               that.userData = userData;
+              that.admin = userData.admin;
+              console.log(that.userData)
             });
           }
         },
@@ -37,6 +39,7 @@ firebase.auth().onAuthStateChanged(user => {
           return {
             auth: null,
             userData: null,
+            admin: false
           }
         },
         template: '<App/>'
