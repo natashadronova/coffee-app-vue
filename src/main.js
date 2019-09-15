@@ -7,6 +7,7 @@ import 'materialize-css/dist/js/materialize.min'
 import firebase from 'firebase'
 import './firebase/init'
 import db from "@/firebase/init";
+import 'firebaseui/dist/firebaseui.css'; 
 
 Vue.config.productionTip = false
 
@@ -28,7 +29,8 @@ firebase.auth().onAuthStateChanged(user => {
 
             // Get userData
             this.auth = user;
-            db.collection("users").doc(user.uid).set({ name: user.displayName.split(' ')[0], lastname: user.displayName.split(' ')[1], email: user.email, admin: false }, { merge: true })
+            
+            db.collection("users").doc(user.uid).set({ name: user.displayName.split(' ')[0], lastname: user.displayName.split(' ')[1], email: user.email}, { merge: true })
               .then(() => {
                 console.log('success')
               });
@@ -37,7 +39,9 @@ firebase.auth().onAuthStateChanged(user => {
             userRef.onSnapshot(function (doc) {
               const userData = doc.data();
               that.userData = userData;
-              that.admin = userData.admin;
+              //admin is assigned from firebase - if it's not defined for the user, then he is not admin
+              that.admin  = (typeof userData.admin === 'undefined') ? false :  userData.admin;
+              //userData.admin;
               console.log("userdata " + that.userData)
             });
 

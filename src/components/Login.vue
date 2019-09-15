@@ -1,7 +1,7 @@
 <template>
   <div class="container center-align">
     <h2>Log In</h2>
-    
+
     <form class="col s12">
       <div class="input-field col s12">
         <i class="material-icons prefix">email</i>
@@ -17,18 +17,18 @@
         <button v-on:click="Login" class="btn amber darken-3">Login</button>
       </div>
     </form>
-    
+
     <div id="firebaseui-auth-container">
-      <div class="content-wrapper ">
+      <!-- <div class="content-wrapper">
         <div class="logo-wrapper">
           <img src="https://developers.google.com/identity/images/g-logo.png" />
         </div>
         <span class="text-container">
           <span>Sign in with Google</span>
         </span>
-      </div>
-      </div>
+      </div> -->
     </div>
+  </div>
 </template>
 
 
@@ -55,7 +55,13 @@ export default {
         }
       ]
     };
-    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+    let ui = firebaseui.auth.AuthUI.getInstance();
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
+    }
+
+   // var ui = new firebaseui.auth.AuthUI(firebase.auth());
     ui.start("#firebaseui-auth-container", uiConfig);
   },
 
@@ -82,7 +88,7 @@ export default {
 </script>
 
 <style scoped>
-#firebaseui-auth-container {
+/* #firebaseui-auth-container {
   margin: 40px;
   display: inline-block;
   
@@ -138,7 +144,5 @@ export default {
 
 *, *:before, *:after {
   box-sizing: border-box;
-}
-
-
+} */
 </style>
