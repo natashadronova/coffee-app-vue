@@ -12,7 +12,7 @@ Vue.config.productionTip = false
 
 let app;
 firebase.auth().onAuthStateChanged(user => {
-
+  console.log(user)
   if (!app) {
     app =
       new Vue({
@@ -28,7 +28,12 @@ firebase.auth().onAuthStateChanged(user => {
 
             // Get userData
             this.auth = user;
-            let userRef = db.collection("users").doc(user.uid);
+            db.collection("users").doc(user.uid).set({ name: user.displayName.split(' ')[0], lastname: user.displayName.split(' ')[1], email: user.email, admin: false }, { merge: true })
+              .then(() => {
+                console.log('success')
+              });
+
+            let userRef = db.collection('users').doc(user.uid)
             userRef.onSnapshot(function (doc) {
               const userData = doc.data();
               that.userData = userData;
