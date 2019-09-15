@@ -35,7 +35,7 @@
             <a class="dropdown-trigger btn" href="#" data-target="menu-dropdown">Menu</a>
 
             <ul id="menu-dropdown" class="dropdown-content">
-              <li v-if="isLoggedIn" class="hidden-sm">
+              <li v-if="isLoggedIn" >
             <router-link :to="{name: 'Index'}">All Orders</router-link>
           </li>
           <li v-if="isLoggedIn">
