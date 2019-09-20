@@ -53,6 +53,7 @@
 import moment from "moment";
 import db from "@/firebase/init";
 import firebase from "firebase";
+import _ from "lodash";
 
 export default {
   name: "Index",
@@ -72,36 +73,34 @@ export default {
       return moment(date).calendar();
     }
   },
-  mounted() {
-    console.log(this.$root.userData);
-  },
+  
   methods: {
-    deleteOrder(id) {
-      // gets uid of current user
-      let curUser = firebase.auth().currentUser.uid;
-      console.log("cuUser = ", curUser);
-      //get the order from db
-      db.collection("orders")
-        .doc(id)
-        .get()
-        .then(doc => {
-          // check if current user submitted the order
-          if (curUser == doc.data().orderedByID) {
-            //delete the order if it's his
-            db.collection("orders")
-              .doc(id)
-              .delete()
-              .then(() => {
-                this.orders = this.orders.filter(order => {
-                  return order.id != id;
-                });
-              });
-          } else {
-            //display error message if it's not
-            alert("This order is not yours");
-          }
-        });
-    }
+    // deleteOrder(id) {
+    //   // gets uid of current user
+    //   let curUser = firebase.auth().currentUser.uid;
+    //   console.log("cuUser = ", curUser);
+    //   //get the order from db
+    //   db.collection("orders")
+    //     .doc(id)
+    //     .get()
+    //     .then(doc => {
+    //       // check if current user submitted the order
+    //       if (curUser == doc.data().orderedByID) {
+    //         //delete the order if it's his
+    //         db.collection("orders")
+    //           .doc(id)
+    //           .delete()
+    //           .then(() => {
+    //             this.orders = this.orders.filter(order => {
+    //               return order.id != id;
+    //             });
+    //           });
+    //       } else {
+    //         //display error message if it's not
+    //         alert("This order is not yours");
+    //       }
+    //     });
+    // }
   },
   created() {
     
@@ -110,20 +109,23 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          //console.log(doc.data(), doc.id)
+          
           let order = doc.data();
           order.id = doc.id;
           this.orders.push(order);
+          
         });
+      
+      }).then(()=>{
+this.orders = _.orderBy(this.orders, "orderTime", "desc");    
       });
-
-      console.log(this.orders)
+  
+      ;
   }
-  // computed properties and lodash framework
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
+
 <style>
 .delete {
   cursor: pointer;
