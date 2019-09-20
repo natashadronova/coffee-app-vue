@@ -37,6 +37,7 @@
               <option value="Vanilla">Vanilla</option>
               <option value="Hazelnut">Hazelnut</option>
               <option value="Caramel">Caramel</option>
+
             </optgroup>
             <optgroup label="Milk">
               <option value="Soy">Soy Milk</option>
@@ -47,17 +48,21 @@
               <option value="Decaf">Decaf</option>
               <option value="Extra Shot">Extra Shot</option>
             </optgroup>
+            <optgroup label="Sugar">
+              <option value="1 sugar">1 sugar</option>
+              <option value="2 sugars">2 sugars</option>
+            </optgroup>
           </select>
         </div>
 
-        <div class="input-field col s12">
+        <!-- <div class="input-field col s12">
           <select v-model="order.geo">
             <option value disabled default selected>GEO</option>
             <option value="BNE">Brisbane</option>
             <option value="SYD" >Sydney</option>
             <option value="MLB">Melbourne</option>
           </select>
-        </div>
+        </div> -->
 
         <div class="input-field col s12">
           <input
