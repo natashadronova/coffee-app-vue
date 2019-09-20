@@ -91,7 +91,8 @@ export default {
       });
 
       let final_order_list = _.uniqBy(this.orders, "concatKey");
-      this.final_order_list = _.orderBy(final_order_list, "count", "desc");
+      this.final_order_list = _.orderBy(final_order_list, ["count","drink"], ["desc",'asc']);
+      console.log(final_order_list)
 
       return this.final_order_list;
     },
