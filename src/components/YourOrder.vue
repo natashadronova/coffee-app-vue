@@ -23,9 +23,9 @@
 
         <div class="input-field col s12">
           <select v-model="order.size">
-            <option value disabled selected>Size</option>
+            <option value disabled>Size</option>
             <option value="Small">Small</option>
-            <option value="Medium" default>Medium</option>
+            <option value="Medium" default selected>Medium</option>
             <option value="Large">Large</option>
           </select>
         </div>
@@ -51,6 +51,15 @@
         </div>
 
         <div class="input-field col s12">
+          <select v-model="order.geo">
+            <option value disabled default selected>GEO</option>
+            <option value="BNE">Brisbane</option>
+            <option value="SYD" >Sydney</option>
+            <option value="MLB">Melbourne</option>
+          </select>
+        </div>
+
+        <div class="input-field col s12">
           <input
             placeholder="If not coffee, then what?"
             id="first_name"
@@ -72,8 +81,12 @@
           <div class="field center-align">
             <button class="btn amber darken-3">Update Order</button>
           </div>
+          
         </div>
       </form>
+      <div class="field center-align">
+            <button class="btn red darken-3"  v-on:click="DeleteOrder">Delete Order</button>
+          </div>
     </div>
   </div>
 </template>
@@ -92,7 +105,8 @@ export default {
         drink: null,
         size: null,
         extras: [],
-        other: null
+        other: null,
+        geo:null
       }
     };
   },
@@ -103,6 +117,15 @@ export default {
     }
   },
   methods: {
+    DeleteOrder(){
+      let curUser = firebase.auth().currentUser.uid;
+      db.collection('orders').doc(curUser).delete().then(() => {
+            this.$router.push({ name: "Index" });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+    },
     EditCoffee() {
       let curUser = firebase.auth().currentUser.uid;
       if (this.order.drink) {
@@ -114,8 +137,8 @@ export default {
             size: this.order.size,
             extras: this.order.extras,
             other: this.order.other,
-            //orderActive: this.order.orderActive,
-            //orderTime: Date.now()
+            geo:this.order.geo
+       
           })
           .then(() => {
             this.$router.push({ name: "Index" });
@@ -132,6 +155,7 @@ export default {
             size: this.order.size,
             extras: this.order.extras,
             other: this.order.other,
+            geo: this.order.geo,
             //orderActive: this.order.orderActive,
             orderTime: Date.now()
           })
@@ -169,6 +193,11 @@ export default {
       if (this.vueRoot.orderData.other) {
         this.order.other = this.vueRoot.orderData.other;
       }
+
+      if (this.vueRoot.orderData.geo) {
+        this.order.geo = this.vueRoot.orderData.geo;
+      }
+
     } else {
       
       /* if (this.vueRoot.userData.orderActive) {
@@ -189,6 +218,10 @@ export default {
 
       if (this.vueRoot.userData.other) {
         this.order.other = this.vueRoot.userData.other;
+      }
+
+      if (this.vueRoot.userData.geo) {
+        this.order.geo = this.vueRoot.userData.geo;
       }
     }
 

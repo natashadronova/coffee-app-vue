@@ -25,9 +25,7 @@
           <li v-if="!isLoggedIn" class="hidden-sm">
             <router-link :to="{name: 'Login'}">Log In</router-link>
           </li>
-          <li v-if="!isLoggedIn" class="hidden-sm">
-            <router-link :to="{name: 'Register'}">Register</router-link>
-          </li>
+          
           <li v-if="isLoggedIn" class="hidden-sm">
             <a v-on:click="Logout">Log Out</a>
           </li>
@@ -35,28 +33,26 @@
             <a class="dropdown-trigger btn" href="#" data-target="menu-dropdown">Menu</a>
 
             <ul id="menu-dropdown" class="dropdown-content">
-              <li v-if="isLoggedIn" >
-            <router-link :to="{name: 'Index'}">All Orders</router-link>
-          </li>
-          <li v-if="isLoggedIn">
-            <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
-          </li>
-          <li v-if="isLoggedIn && vueRoot.orderData " >
-            <router-link :to="{ name: 'YourOrder'}">Edit Order</router-link>
-          </li>
-          <li v-if="isLoggedIn && !vueRoot.orderData " >
-            <router-link :to="{ name: 'YourOrder'}">Add Order</router-link>
-          </li>
+              <li v-if="isLoggedIn">
+                <router-link :to="{name: 'Index'}">All Orders</router-link>
+              </li>
+              <li v-if="isLoggedIn">
+                <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
+              </li>
+              <li v-if="isLoggedIn && vueRoot.orderData ">
+                <router-link :to="{ name: 'YourOrder'}">Edit Order</router-link>
+              </li>
+              <li v-if="isLoggedIn && !vueRoot.orderData ">
+                <router-link :to="{ name: 'YourOrder'}">Add Order</router-link>
+              </li>
 
-          <li v-if="!isLoggedIn" >
-            <router-link :to="{name: 'Login'}">Log In</router-link>
-          </li>
-          <li v-if="!isLoggedIn" >
-            <router-link :to="{name: 'Register'}">Register</router-link>
-          </li>
-          <li v-if="isLoggedIn" >
-            <a v-on:click="Logout">Log Out</a>
-          </li>
+              <li v-if="!isLoggedIn">
+                <router-link :to="{name: 'Login'}">Log In</router-link>
+              </li>
+              
+              <li v-if="isLoggedIn">
+                <a v-on:click="Logout">Log Out</a>
+              </li>
             </ul>
           </li>
         </ul>

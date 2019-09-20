@@ -2,7 +2,10 @@
   <div class="container">
     <div class="container-fluid">
       <!-- <i class="material-icons delete deep-orange-text darken-2">add</i> -->
-    
+      <div class="centered">
+        <h3 class="centered">{{orders.length}} coffees ordered</h3>
+      </div>
+
       <table class="highlight centered">
         <thead>
           <tr class="brown lighten-2 white-text">
@@ -30,13 +33,15 @@
           </tr>
         </tbody>
       </table>
-      
+
+      <div class="field center-align page-footer">
+        <button
+          v-if="vueRoot.admin"
+          class="hidden-sm btn amber darken-3 centered"
+          v-on:click="ClearOrders"
+        >Clear Orders Forever</button>
+      </div>
     </div>
-    <div class="field center-align page-footer">
-    <button v-if="vueRoot.admin" class="hidden-sm btn amber darken-3 centered" v-on:click="ClearOrders">
-            Clear Orders Forever
-          </button>
-          </div>
   </div>
 </template>
 
@@ -109,23 +114,21 @@ export default {
         this.Calculate();
       });
 
-      console.log(this.$root.admin)
+    console.log(this.$root.admin);
   }
 };
 </script>
 
 <style scoped>
-.page-footer{
-position:fixed;
-bottom:0;
-left:0;
-width:100%;
-padding-bottom: 10px;
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 10px;
 }
 
 .container-fluid {
   margin-top: 20px;
 }
-
-
 </style>

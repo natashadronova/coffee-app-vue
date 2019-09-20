@@ -11,6 +11,7 @@
           <th>Order</th>
           <th>Size</th>
           <th>Extras</th>
+          <th>Geo</th>
           <th>Other</th>
           <th class="hidden-sm">Date Ordered</th>
           <th class="hidden-sm">Ordered by</th>
@@ -28,6 +29,7 @@
           <td>
             <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
           </td>
+          <td>{{order.geo}}</td>
           <td>{{order.other}}</td>
           <td class="hidden-sm">{{order.orderTime | moment }}</td>
           <td class="hidden-sm">{{order.name}}</td>

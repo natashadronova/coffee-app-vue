@@ -51,28 +51,12 @@ let router =  new Router({
       }
     },
 
-    // {
-    //   path:'/edit-order/:order_slug',
-    //   name:'EditOrder',
-    //   component: EditOrder,
-    //   meta:{
-    //     requiresAuth:true
-    //   }
-    // },
+  
 
     {
       path:'/login',
       name:'Login',
       component: Login,
-      meta:{
-        requiresGuest:true
-      }
-    },
-
-    {
-      path:'/register',
-      name:'Register',
-      component: Register,
       meta:{
         requiresGuest:true
       }
