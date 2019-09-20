@@ -24,8 +24,8 @@
         <div class="input-field col s12">
           <select v-model="order.size">
             <option value disabled>Size</option>
-            <option value="Small">Small</option>
-            <option value="Medium" default selected>Medium</option>
+            <option value="Small" default selected>Small</option>
+            <option value="Medium" >Medium</option>
             <option value="Large">Large</option>
           </select>
         </div>
