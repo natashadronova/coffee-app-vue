@@ -5,9 +5,22 @@ admin.initializeApp();
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
+exports.deleteOrders = functions.https.onRequest((request, response) => {
+  deleteCollection((path) => {
+    console.log('cloud function')
+    // Get a new write batch
+    // var batch = firebase.firestore().batch()
+
+    // firebase.firestore().collection('orders').listDocuments().then(val => {
+    //     val.map((val) => {
+    //         batch.delete(val)
+    //     })
+
+    //     batch.commit()
+    // })
+  }
+  )
+})
 
 //https://firebase.google.com/docs/functions/schedule-functions
 // 

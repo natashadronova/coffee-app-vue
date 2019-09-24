@@ -8,8 +8,11 @@ import Register from '@/components/Register'
 import OrderSummary from '@/components/OrderSummary'
 import YourOrder from '@/components/YourOrder'
 import firebase from 'firebase';
+import VueMaterial from 'vue-material';
 
 Vue.use(Router)
+Vue.use(VueMaterial)
+
 
 let router =  new Router({
   routes: [

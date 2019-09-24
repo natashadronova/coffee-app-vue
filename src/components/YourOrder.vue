@@ -1,10 +1,13 @@
 <template>
   <div class="edit-order container">
     <!-- v-if="order" -->
-
-    <h2>Add Order</h2>
+    <h2 >Your Order</h2>
+    <!-- <h2 v-if="isLoggedIn && this.vueRoot.orderData ">Add Order</h2> -->
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
+        <div class="input-field col s12">
+        <!-- <Autocomplete/> -->
+        </div>
         <div class="input-field col s12">
           <select v-model="order.drink">
             <option value disabled selected>Coffee</option>
@@ -25,7 +28,7 @@
           <select v-model="order.size">
             <option value disabled>Size</option>
             <option value="Small" default selected>Small</option>
-            <option value="Medium" >Medium</option>
+            <option value="Medium">Medium</option>
             <option value="Large">Large</option>
           </select>
         </div>
@@ -37,7 +40,6 @@
               <option value="Vanilla">Vanilla</option>
               <option value="Hazelnut">Hazelnut</option>
               <option value="Caramel">Caramel</option>
-
             </optgroup>
             <optgroup label="Milk">
               <option value="Soy">Soy Milk</option>
@@ -62,7 +64,7 @@
             <option value="SYD" >Sydney</option>
             <option value="MLB">Melbourne</option>
           </select>
-        </div> -->
+        </div>-->
 
         <div class="input-field col s12">
           <input
@@ -74,24 +76,18 @@
           />
         </div>
 
-        <!-- <div class="input-field col s12">
-          <div class="switch">
-            <label>
-              <input type="checkbox" v-model="order.orderActive" />
-              <span>Make order active</span>
-            </label>
-          </div>
-        </div>-->
         <div class="input-field col s12">
           <div class="field center-align">
-            <button class="btn amber darken-3">Update Order</button>
+            <button class="btn amber darken-3">Submit</button>
+            <!-- <button class="btn amber darken-3" v-if="isLoggedIn && !vueRoot.orderData ">Add </button> -->
+            <!-- <button class="btn amber darken-3" v-if="isLoggedIn && vueRoot.orderData ">Edit </button> -->
           </div>
-          
         </div>
       </form>
       <div class="field center-align">
-            <button class="btn red darken-3"  v-on:click="DeleteOrder">Delete Order</button>
-          </div>
+        <button class="btn red darken-3"  >Delete</button> 
+        <!-- v-on:click="DeleteOrder" v-if="isLoggedIn && vueRoot.orderData" -->
+      </div>
     </div>
   </div>
 </template>
@@ -101,9 +97,16 @@
 import M from "materialize-css";
 import db from "@/firebase/init";
 import firebase from "firebase";
+import VueMaterial from 'vue-material'
+import 'vue-material/dist/vue-material.css'
+import Autocomplete from '@/components/AutoComplete'
+
 
 export default {
   name: "YourOrder",
+  components:{
+    Autocomplete
+  },
   data() {
     return {
       order: {
@@ -111,7 +114,7 @@ export default {
         size: null,
         extras: [],
         other: null,
-        geo:null
+        geo: null
       }
     };
   },
@@ -122,14 +125,17 @@ export default {
     }
   },
   methods: {
-    DeleteOrder(){
+    DeleteOrder() {
       let curUser = firebase.auth().currentUser.uid;
-      db.collection('orders').doc(curUser).delete().then(() => {
-            this.$router.push({ name: "Index" });
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      db.collection("orders")
+        .doc(curUser)
+        .delete()
+        .then(() => {
+          this.$router.push({ name: "Index" });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     EditCoffee() {
       let curUser = firebase.auth().currentUser.uid;
@@ -142,8 +148,7 @@ export default {
             size: this.order.size,
             extras: this.order.extras,
             other: this.order.other,
-            geo:this.order.geo
-       
+            geo: this.order.geo
           })
           .then(() => {
             this.$router.push({ name: "Index" });
@@ -178,7 +183,6 @@ export default {
 
   mounted() {
     if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
-
       /* if (this.vueRoot.orderData.orderActive) {
         this.order.orderActive = this.vueRoot.orderData.orderActive;
       } */
@@ -202,9 +206,7 @@ export default {
       if (this.vueRoot.orderData.geo) {
         this.order.geo = this.vueRoot.orderData.geo;
       }
-
     } else {
-      
       /* if (this.vueRoot.userData.orderActive) {
         this.order.orderActive = this.vueRoot.userData.orderActive;
       } */
@@ -231,6 +233,10 @@ export default {
     }
 
     M.AutoInit();
+    
   }
 };
+
+
+
 </script>

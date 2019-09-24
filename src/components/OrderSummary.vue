@@ -34,7 +34,7 @@
         </tbody>
       </table>
 
-      <div class="field center-align page-footer">
+      <div class="center-align container-fluid">
         <button
           v-if="vueRoot.admin"
           class="hidden-sm btn amber darken-3 centered"
@@ -91,14 +91,19 @@ export default {
       });
 
       let final_order_list = _.uniqBy(this.orders, "concatKey");
-      this.final_order_list = _.orderBy(final_order_list, ["count","drink"], ["desc",'asc']);
+      this.final_order_list = _.orderBy(final_order_list, ["drink","count"], ["desc",'desc']);
       console.log(final_order_list)
 
       return this.final_order_list;
     },
 
     ClearOrders: function() {
-      console.log("cleared");
+      
+      db.collection('orders').getDocuments().then((snapshot) => {
+  return snapshot.documents.map((doc) =>{
+    doc.reference.delete();
+  });
+});
     }
   },
   mounted() {
