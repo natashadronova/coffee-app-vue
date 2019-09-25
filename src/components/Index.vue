@@ -19,12 +19,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <!-- <td>
-            <i v-if="order.orderActive === false"></i>
-            <i v-if="order.orderActive === true" class="material-icons done light-green-text">check</i>
-          </td> -->
-          <td>{{order.drink}}</td>
+        
+        <tr v-for="order in orders" :key="order.id" v-bind:class="[ (order.id!==vueRoot.userData.id) ? myOrderClass : '']">
+         
+          <td >{{order.drink}}</td>
+          
           <td>{{order.size}}</td>
           <td>
             <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
@@ -59,7 +58,8 @@ export default {
   name: "Index",
   data() {
     return {
-      orders: []
+      orders: [],
+      myOrderClass:"orange lighten-5"
     };
   },
   computed: {
