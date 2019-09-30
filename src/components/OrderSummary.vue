@@ -48,6 +48,7 @@
 <script>
 import db from "@/firebase/init";
 import firebase from "firebase";
+import functions from '@firebase/functions'
 import _ from "lodash";
 
 export default {
@@ -97,13 +98,11 @@ export default {
       return this.final_order_list;
     },
 
-    ClearOrders: function() {
-      
-      db.collection('orders').getDocuments().then((snapshot) => {
-  return snapshot.documents.map((doc) =>{
-    doc.reference.delete();
-  });
-});
+    ClearOrders() {
+      let ClearOrders = firebase.functions().httpsCallable('DeleteOrders')
+      ClearOrders('orders').then(result=>{
+        //console.log(result)
+      })
     }
   },
   mounted() {

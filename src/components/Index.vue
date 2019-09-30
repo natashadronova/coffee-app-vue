@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         
-        <tr v-for="order in orders" :key="order.id" v-bind:class="[ (order.id!==vueRoot.userData.id) ? myOrderClass : '']">
+        <tr v-for="order in orders" :key="order.id" v-bind:class="[ (order.id==curUser) ? myOrderClass : '']">
          
           <td >{{order.drink}}</td>
           
@@ -59,7 +59,8 @@ export default {
   data() {
     return {
       orders: [],
-      myOrderClass:"orange lighten-5"
+      myOrderClass:"orange lighten-5",
+      curUser:''
     };
   },
   computed: {
@@ -101,9 +102,10 @@ export default {
     //       }
     //     });
     // }
+    
   },
   created() {
-    
+    this.curUser = firebase.auth().currentUser.uid;
     //fetch data from the firestore
     db.collection("orders")
       .get()
@@ -117,7 +119,8 @@ export default {
         });
       
       }).then(()=>{
-this.orders = _.orderBy(this.orders, "orderTime", "desc");    
+this.orders = _.orderBy(this.orders, "orderTime", "desc");   
+
       });
   
       ;

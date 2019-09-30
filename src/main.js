@@ -29,7 +29,8 @@ firebase.auth().onAuthStateChanged(user => {
 
             // Get userData
             this.auth = user;
-            
+            console.log(this.auth.uid)
+            console.log(user.uid)
             db.collection("users").doc(user.uid).set({ name: user.displayName.split(' ')[0], lastname: user.displayName.split(' ')[1], email: user.email}, { merge: true })
               .then(() => {
                 console.log('success')
