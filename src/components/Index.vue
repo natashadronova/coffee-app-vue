@@ -26,7 +26,7 @@
           
           <td>{{order.size}}</td>
           <td>
-            <span v-for="(extra,index) in order.extras" :key="index" class="chip extras">{{extra}}</span>
+            <span v-for="(extra,index) in order.extras_list" :key="index" class="chip extras">{{extra}}</span>
           </td>
           <!-- <td>{{order.geo}}</td> -->
           <td>{{order.other}}</td>
@@ -116,7 +116,18 @@ export default {
           order.id = doc.id;
           this.orders.push(order);
           
+          
         });
+        
+        const result=[]
+      this.orders.forEach(order => {
+        console.log(order.extras)
+        result.push( order.extras.map(({ name }) => name))
+        
+        // this.order.extras = order.extras
+        console.log(result)
+      })
+
       
       }).then(()=>{
 this.orders = _.orderBy(this.orders, "orderTime", "desc");   

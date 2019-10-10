@@ -105,6 +105,7 @@ import firebase from "firebase";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.css";
 import Multiselect from "vue-multiselect";
+import _ from 'lodash';
 
 export default {
   name: "YourOrder",
@@ -119,6 +120,7 @@ export default {
         size: null,
         milk: null,
         extras: [],
+        extras_list:null,
         other: null,
         geo: null
       },
@@ -179,14 +181,7 @@ export default {
     }
   },
   methods: {
-    addTag(newTag) {
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
-      };
-      this.options.push(tag);
-      this.value.push(tag);
-    },
+
     DeleteOrder() {
       let curUser = firebase.auth().currentUser.uid;
       db.collection("orders")
@@ -219,14 +214,19 @@ export default {
           .catch(err => {
             console.log(err);
           });
-
+        let extras = this.order.extras.map((item)=>{
+          return item['name']
+        });
+        extras = _.orderBy(extras, [extras => extras.toLowerCase()],['asc'])
+        console.log(extras)
         db.collection("orders")
           .doc(curUser)
           .set({
             name: this.vueRoot.userData.name,
             drink: this.order.drink,
             size: this.order.size,
-            extras: this.order.extras,
+            extras_list: extras , // for multiselect
+            extras:this.order.extras , //list of items, readable
             other: this.order.other,
             geo: this.order.geo,
             

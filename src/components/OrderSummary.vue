@@ -23,7 +23,7 @@
             <td>{{final_order_list[index].size}}</td>
             <td>
               <span
-                v-for="(extra,index) in final_order_list[index].extras"
+                v-for="(extra,index) in final_order_list[index].extras_list"
                 :key="index"
                 class="chip extras"
               >{{extra}}</span>
@@ -75,7 +75,7 @@ export default {
           "-" +
           order.size +
           "-" +
-          order.extras +
+          order.extras_list +
           "-" +
           order.other;
         order.concatKey = key;
