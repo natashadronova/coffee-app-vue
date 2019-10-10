@@ -9,9 +9,13 @@ import OrderSummary from '@/components/OrderSummary'
 import YourOrder from '@/components/YourOrder'
 import firebase from 'firebase';
 import VueMaterial from 'vue-material';
+import Multiselect from "vue-multiselect";
+
 
 Vue.use(Router)
 Vue.use(VueMaterial)
+Vue.component('multiselect', Multiselect)
+
 
 
 let router =  new Router({

@@ -1,39 +1,51 @@
 <template>
   <div class="edit-order container">
     <!-- v-if="order" -->
-    <h2 >Your Order</h2>
+    <h2>Your Order</h2>
     <!-- <h2 v-if="isLoggedIn && this.vueRoot.orderData ">Add Order</h2> -->
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
+        <!-- Drink -->
         <div class="input-field col s12">
-        <!-- <Autocomplete/> -->
-        </div>
-        <div class="input-field col s12">
-          <select v-model="order.drink">
-            <option value disabled selected>Coffee</option>
-            <option value="Latte">Latte</option>
-            <option value="Mocha">Mocha</option>
-            <option value="Hot Chocolate">Hot Chocolate</option>
-            <option value="Flat White">Flat White</option>
-            <option value="Long Black">Long Black</option>
-            <option value="Chai Latte">Chai Latte</option>
-            <option value="Dirty Chai Latte">Dirty Chai Latte</option>
-            <option value="Piccolo">Piccolo</option>
-            <option value="Cappucino">Cappucino</option>
-            <option value="Other">Other (Juice / Tea - specify in text field)</option>
-          </select>
+          <multiselect v-model="order.drink" :options="options.drink"></multiselect>
         </div>
 
+        <!-- Size -->
         <div class="input-field col s12">
-          <select v-model="order.size">
-            <option value disabled>Size</option>
-            <option value="Small" default selected>Small</option>
-            <option value="Medium">Medium</option>
-            <option value="Large">Large</option>
-          </select>
+          <div class="col s4">
+            <md-checkbox v-model="order.size" value="Small" checked>Small</md-checkbox>
+          </div>
+          <div class="col s4">
+            <md-checkbox v-model="order.size" value="Medium">Medium</md-checkbox>
+          </div>
+          <div class="col s4">
+            <md-checkbox v-model="order.size" value="Large">Large</md-checkbox>
+          </div>
+        </div>
+        <!-- Milk -->
+        <div class="input-field col s12">
+          <div>
+            <multiselect
+              v-model="order.extras"
+              :options="extras"
+              :multiple="true"
+              group-values="types"
+              group-label="option"
+              :group-select="true"
+              placeholder="Extras"
+              track-by="name"
+              label="name"
+            >
+              <span slot="noResult">Oops! No extras found</span>
+            </multiselect>
+            <!-- <pre class="language-json"><code>{{ order.extras  }}</code></pre> -->
+          </div>
         </div>
 
-        <div class="input-field col s12">
+       
+
+        
+        <!-- <div class="input-field col s12">
           <select multiple v-model="order.extras">
             <option value disabled selected>Extras</option>
             <optgroup label="Toppings">
@@ -55,16 +67,9 @@
               <option value="2 sugars">2 sugars</option>
             </optgroup>
           </select>
-        </div>
+        </div> -->
 
-        <!-- <div class="input-field col s12">
-          <select v-model="order.geo">
-            <option value disabled default selected>GEO</option>
-            <option value="BNE">Brisbane</option>
-            <option value="SYD" >Sydney</option>
-            <option value="MLB">Melbourne</option>
-          </select>
-        </div>-->
+ 
 
         <div class="input-field col s12">
           <input
@@ -85,7 +90,7 @@
         </div>
       </form>
       <div class="field center-align">
-        <button class="btn red darken-3"  >Delete</button> 
+        <button class="btn red darken-3">Delete</button>
         <!-- v-on:click="DeleteOrder" v-if="isLoggedIn && vueRoot.orderData" -->
       </div>
     </div>
@@ -97,25 +102,74 @@
 import M from "materialize-css";
 import db from "@/firebase/init";
 import firebase from "firebase";
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
-import Autocomplete from '@/components/AutoComplete'
-
+import VueMaterial from "vue-material";
+import "vue-material/dist/vue-material.css";
+import Multiselect from "vue-multiselect";
 
 export default {
   name: "YourOrder",
-  components:{
-    Autocomplete
+  components: {
+    // Autocomplete,
+    Multiselect
   },
   data() {
     return {
       order: {
-        drink: null,
+        drink: "",
         size: null,
+        milk: null,
         extras: [],
         other: null,
         geo: null
-      }
+      },
+      options: {
+        drink: [
+          "Mocha",
+          "Latte",
+          "Hot Chocolate",
+          "Flat White",
+          "Long Black",
+          "Chai Latte",
+          "Dirty Chai Latte",
+          "Piccolo",
+          "Cappucino",
+          "Orange Juice",
+          "Other"
+        ]
+      },
+      extras: [
+        {
+          option: 'milk',
+          types:[ 
+          { name: "Soy"},
+          { name: "Almond"},
+          { name: "Skim" },
+          { name: "Zymil" }
+          ]
+        },
+        {
+          option:'strength',
+          types: [
+          { name: "Decaf" },
+          { name: "Extra shot" }
+          ]
+        },
+        {
+          option:'topping',
+          types: [
+          { name: "Caramel"},
+          { name: "Hazelnut"},
+          { name: "Vanilla" }
+          ] 
+        },
+        {
+          option:'sugar',
+          types: [
+            { name: "1 Sugar"}, 
+            { name: "2 Sugars" }
+          ]
+        }
+      ]
     };
   },
   computed: {
@@ -125,6 +179,14 @@ export default {
     }
   },
   methods: {
+    addTag(newTag) {
+      const tag = {
+        name: newTag,
+        code: newTag.substring(0, 2) + Math.floor(Math.random() * 10000000)
+      };
+      this.options.push(tag);
+      this.value.push(tag);
+    },
     DeleteOrder() {
       let curUser = firebase.auth().currentUser.uid;
       db.collection("orders")
@@ -138,6 +200,7 @@ export default {
         });
     },
     EditCoffee() {
+      console.log(this.choice)
       let curUser = firebase.auth().currentUser.uid;
       if (this.order.drink) {
         this.feedback = null;
@@ -166,7 +229,7 @@ export default {
             extras: this.order.extras,
             other: this.order.other,
             geo: this.order.geo,
-            //orderActive: this.order.orderActive,
+            
             orderTime: Date.now()
           })
           .then(() => {
@@ -233,10 +296,9 @@ export default {
     }
 
     M.AutoInit();
-    
   }
 };
-
-
-
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
