@@ -38,38 +38,9 @@
             >
               <span slot="noResult">Oops! No extras found</span>
             </multiselect>
-            <!-- <pre class="language-json"><code>{{ order.extras  }}</code></pre> -->
+
           </div>
         </div>
-
-       
-
-        
-        <!-- <div class="input-field col s12">
-          <select multiple v-model="order.extras">
-            <option value disabled selected>Extras</option>
-            <optgroup label="Toppings">
-              <option value="Vanilla">Vanilla</option>
-              <option value="Hazelnut">Hazelnut</option>
-              <option value="Caramel">Caramel</option>
-            </optgroup>
-            <optgroup label="Milk">
-              <option value="Soy">Soy Milk</option>
-              <option value="Almond">Almond Milk</option>
-              <option value="Skim">Skim Milk</option>
-            </optgroup>
-            <optgroup label="Strength">
-              <option value="Decaf">Decaf</option>
-              <option value="Extra Shot">Extra Shot</option>
-            </optgroup>
-            <optgroup label="Sugar">
-              <option value="1 sugar">1 sugar</option>
-              <option value="2 sugars">2 sugars</option>
-            </optgroup>
-          </select>
-        </div> -->
-
- 
 
         <div class="input-field col s12">
           <input
@@ -90,7 +61,7 @@
         </div>
       </form>
       <div class="field center-align">
-        <button class="btn red darken-3">Delete</button>
+        <button class="btn red darken-3" v-on:click="DeleteOrder" v-if="this.vueRoot.orderData" >Delete</button>
         <!-- v-on:click="DeleteOrder" v-if="isLoggedIn && vueRoot.orderData" -->
       </div>
     </div>
@@ -245,6 +216,8 @@ export default {
   },
 
   mounted() {
+    // console.log(isLoggedIn)
+    console.log(this.vueRoot)
     if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
       /* if (this.vueRoot.orderData.orderActive) {
         this.order.orderActive = this.vueRoot.orderData.orderActive;
@@ -296,6 +269,8 @@ export default {
     }
 
     M.AutoInit();
+
+    console.log(this.vueRoot.isLoggedIn)
   }
 };
 </script>

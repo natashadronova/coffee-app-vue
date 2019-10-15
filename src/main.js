@@ -52,13 +52,17 @@ firebase.auth().onAuthStateChanged(user => {
               that.orderData = orderData;
               console.log("order " + that.orderData)
             });
-          }
+
+          
+            let isLoggedIn = (firebase.auth().currentUser) ? true : false;
+          } 
         },
         data: function () {
           return {
             auth: null,
             userData: null,
             orderData: null,
+            isLoggedIn:null,
             admin: false
           }
         },
