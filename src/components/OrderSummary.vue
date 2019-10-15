@@ -113,8 +113,12 @@ export default {
               // Commit the batch
               return batch.commit();
         }).then(function() {
-            // Delete completed!
-            // ...
+            
+          this.$router.push({ name: "Index" });
+        })
+        .catch(err => {
+          console.log(err);
+       
         }) 
 }
   },
