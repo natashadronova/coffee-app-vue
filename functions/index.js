@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const db = require('firebase')
 admin.initializeApp();
 
 // // Create and Deploy Your First Cloud Functions
@@ -11,31 +12,30 @@ admin.initializeApp();
 
 
 exports.DeleteOrders = functions.https.onCall((data, context) => {
-  deleteCollection((path) => {
+      console.log('function')
+      var batch = firebase.firestore().batch()
+      console.log('batch', batch)
+      // firebase.firestore().collection('orders').listDocuments().then(val => {
+      //     val.map((val) => {
+      //         batch.delete(val)
+      //     })
+  
+      //     batch.commit()
+      // })
+  }
 
-    // Get a new write batch
-    //   var batch = firebase.firestore().batch()
 
-    //   firebase.firestore().collection('orders').listDocuments().then(val => {
-    //       val.map((val) => {
-    //           batch.delete(val)
-    //       })
-
-    //       batch.commit()
+    // firebase.collection('orders').get()
+    //   .then(qs => {
+    //     qs.forEach(docSnapshot => {
+    //       promises.push(docSnapshot.ref.delete());
+    //     });
+    //     return Promise.all(promises);
     //   })
-    // }
-
-    firebase.collection('orders').get()
-      .then(qs => {
-        qs.forEach(docSnapshot => {
-          promises.push(docSnapshot.ref.delete());
-        });
-        return Promise.all(promises);
-      })
-      .catch(error => {
-        console.log(error);
-        return false; 
-      })
+    //   .catch(error => {
+    //     console.log(error);
+    //     return false; 
+    //   })
 
 
 

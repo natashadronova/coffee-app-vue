@@ -99,12 +99,26 @@ export default {
     },
 
     ClearOrders() {
-      let ClearOrders = firebase.functions().httpsCallable('DeleteOrders')
-      ClearOrders('orders').then(result=>{
-        //console.log(result)
-      })
-    }
+      // First perform the query
+      db.collection('orders').get()
+        .then(function(querySnapshot) {
+              // Once we get the results, begin a batch
+              var batch = db.batch();
+
+              querySnapshot.forEach(function(doc) {
+                  // For each doc, add a delete operation to the batch
+                  batch.delete(doc.ref);
+              });
+
+              // Commit the batch
+              return batch.commit();
+        }).then(function() {
+            // Delete completed!
+            // ...
+        }) 
+}
   },
+
   mounted() {
     //this.Calculate();
     //get all orders
@@ -121,7 +135,8 @@ export default {
 
     console.log(this.$root.admin);
   }
-};
+}
+
 </script>
 
 <style scoped>
