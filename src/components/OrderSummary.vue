@@ -48,8 +48,9 @@
 <script>
 import db from "@/firebase/init";
 import firebase from "firebase";
-import functions from '@firebase/functions'
+import functions from "@firebase/functions";
 import _ from "lodash";
+import VueSimpleAlert from "vue-simple-alert";
 
 export default {
   name: "OrderSummary",
@@ -92,35 +93,51 @@ export default {
       });
 
       let final_order_list = _.uniqBy(this.orders, "concatKey");
-      this.final_order_list = _.orderBy(final_order_list, ["drink","count"], ["desc",'desc']);
-      console.log(final_order_list)
+      this.final_order_list = _.orderBy(
+        final_order_list,
+        ["drink", "count"],
+        ["desc", "desc"]
+      );
+      console.log(final_order_list);
 
       return this.final_order_list;
     },
 
     ClearOrders() {
-      // First perform the query
-      db.collection('orders').get()
-        .then(function(querySnapshot) {
-              // Once we get the results, begin a batch
-              var batch = db.batch();
+      let that = this;
+      this.$alert(
+        "Do you really want to delete all orders?",
+        "Are you sure?",
+        "error",
+        {
+          confirmButtonText: "DELETE"
+        }
+      ).then(() =>
+        // First perform the query
+        db
+          .collection("orders")
+          .get()
+          .then(function(querySnapshot) {
+            // Once we get the results, begin a batch
+            var batch = db.batch();
 
-              querySnapshot.forEach(function(doc) {
-                  // For each doc, add a delete operation to the batch
-                  batch.delete(doc.ref);
-              });
+            querySnapshot.forEach(function(doc) {
+              // For each doc, add a delete operation to the batch
+              batch.delete(doc.ref);
+            });
 
-              // Commit the batch
-              return batch.commit();
-        }).then(function() {
-            
-          this.$router.push({ name: "Index" });
-        })
-        .catch(err => {
-          console.log(err);
-       
-        }) 
-}
+            // Commit the batch
+            return batch.commit();
+          })
+          
+          .catch(err => {
+            console.log(err);
+          })
+      ).then(function() {
+            // go to home page
+            that.$router.push({ name: "Index" });
+          });
+    }
   },
 
   mounted() {
@@ -139,8 +156,7 @@ export default {
 
     console.log(this.$root.admin);
   }
-}
-
+};
 </script>
 
 <style scoped>

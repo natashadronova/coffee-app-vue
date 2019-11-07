@@ -10,10 +10,11 @@ import YourOrder from '@/components/YourOrder'
 import firebase from 'firebase';
 import VueMaterial from 'vue-material';
 import Multiselect from "vue-multiselect";
-
+import VueSimpleAlert from "vue-simple-alert";
 
 Vue.use(Router)
 Vue.use(VueMaterial)
+Vue.use(VueSimpleAlert);
 Vue.component('multiselect', Multiselect)
 
 

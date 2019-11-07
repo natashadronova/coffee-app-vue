@@ -9,6 +9,7 @@ import './firebase/init'
 import db from "@/firebase/init";
 import 'firebaseui/dist/firebaseui.css'; 
 
+
 Vue.config.productionTip = false
 
 let app;
