@@ -1,8 +1,8 @@
 <template>
   <div class="index container">
     <div class="container-fluid" height="80px">
-      <br>
-      <br>
+      <br />
+      <br />
     </div>
     <table class="highlight centered">
       <thead>
@@ -19,14 +19,20 @@
         </tr>
       </thead>
       <tbody>
-        
-        <tr v-for="order in orders" :key="order.id" v-bind:class="[ (order.id==curUser) ? myOrderClass : '']">
-         
-          <td >{{order.drink}}</td>
-          
+        <tr
+          v-for="order in orders"
+          :key="order.id"
+          v-bind:class="[ (order.id==curUser) ? myOrderClass : '']"
+        >
+          <td>{{order.drink}}</td>
+
           <td>{{order.size}}</td>
           <td>
-            <span v-for="(extra,index) in order.extras_list" :key="index" class="chip extras">{{extra}}</span>
+            <span
+              v-for="(extra,index) in order.extras_list"
+              :key="index"
+              class="chip extras"
+            >{{extra}}</span>
           </td>
           <!-- <td>{{order.geo}}</td> -->
           <td>{{order.other}}</td>
@@ -41,7 +47,7 @@
             <span style="cursor:pointer;">
               <i class="material-icons delete deep-orange-text darken-2" @click="deleteOrder(order.id)">delete</i>
             </span>
-          </td> -->
+          </td>-->
         </tr>
       </tbody>
     </table>
@@ -59,22 +65,22 @@ export default {
   data() {
     return {
       orders: [],
-      myOrderClass:"orange lighten-5",
-      curUser:''
+      myOrderClass: "orange lighten-5",
+      curUser: ""
     };
   },
   computed: {
     // Just to make referencing to variables cleaner
     vueRoot() {
       return this.$root;
-    },
+    }
   },
   filters: {
     moment: function(date) {
       return moment(date).calendar();
     }
   },
-  
+
   methods: {
     // deleteOrder(id) {
     //   // gets uid of current user
@@ -102,7 +108,6 @@ export default {
     //       }
     //     });
     // }
-    
   },
   created() {
     this.curUser = firebase.auth().currentUser.uid;
@@ -111,30 +116,23 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
-          
           let order = doc.data();
           order.id = doc.id;
           this.orders.push(order);
-          
-          
         });
-        
-        const result=[]
-      this.orders.forEach(order => {
-        console.log(order.extras)
-        result.push( order.extras.map(({ name }) => name))
-        
-        // this.order.extras = order.extras
-        console.log(result)
+
+        const result = [];
+        this.orders.forEach(order => {
+          // console.log(order.extras)
+          result.push(order.extras.map(({ name }) => name));
+
+          // this.order.extras = order.extras
+          // console.log(result)
+        });
       })
-
-      
-      }).then(()=>{
-this.orders = _.orderBy(this.orders, "orderTime", "desc");   
-
+      .then(() => {
+        this.orders = _.orderBy(this.orders, "orderTime", "desc");
       });
-  
-      ;
   }
 };
 </script>
