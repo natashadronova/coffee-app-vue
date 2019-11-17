@@ -1,0 +1,13 @@
+[debug] [2019-11-17T06:34:44.151Z] ----------------------------------------------------------------------
+[debug] [2019-11-17T06:34:44.154Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\natal\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2019-11-17T06:34:44.154Z] CLI Version:   7.3.2
+[debug] [2019-11-17T06:34:44.154Z] Platform:      win32
+[debug] [2019-11-17T06:34:44.154Z] Node Version:  v10.15.2
+[debug] [2019-11-17T06:34:44.155Z] Time:          Sun Nov 17 2019 16:34:44 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2019-11-17T06:34:44.155Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-11-17T06:34:44.164Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-11-17T06:34:44.165Z] > authorizing via signed-in user
+[debug] [2019-11-17T06:34:44.165Z] [iam] checking project coffee-1f619 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2019-11-17T06:34:44.167Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/coffee-1f619:testIamPermissions  
+

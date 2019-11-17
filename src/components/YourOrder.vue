@@ -2,6 +2,7 @@
   <div class="edit-order container">
     <!-- v-if="order" -->
     <h2>Your Order</h2>
+    <p v-if="exists">You have already submitted your order.</p>
     <!-- <h2 v-if="isLoggedIn && this.vueRoot.orderData ">Add Order</h2> -->
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
@@ -38,7 +39,6 @@
             >
               <span slot="noResult">Oops! No extras found</span>
             </multiselect>
-
           </div>
         </div>
 
@@ -61,7 +61,11 @@
         </div>
       </form>
       <div class="field center-align">
-        <button class="btn red darken-3" v-on:click="DeleteOrder" v-if="this.vueRoot.orderData" >Delete</button>
+        <button
+          class="btn red darken-3"
+          v-on:click="DeleteOrder"
+          v-if="exists"
+        >Delete</button>
         <!-- v-on:click="DeleteOrder" v-if="isLoggedIn && vueRoot.orderData" -->
       </div>
     </div>
@@ -76,7 +80,7 @@ import firebase from "firebase";
 import VueMaterial from "vue-material";
 import "vue-material/dist/vue-material.css";
 import Multiselect from "vue-multiselect";
-import _ from 'lodash';
+import _ from "lodash";
 
 export default {
   name: "YourOrder",
@@ -91,10 +95,11 @@ export default {
         size: null,
         milk: null,
         extras: [],
-        extras_list:null,
+        extras_list: null,
         other: null,
         geo: null
       },
+      exists: false,
       options: {
         drink: [
           "Mocha",
@@ -112,35 +117,29 @@ export default {
       },
       extras: [
         {
-          option: 'milk',
-          types:[ 
-          { name: "Soy"},
-          { name: "Almond"},
-          { name: "Skim" },
-          { name: "Zymil" }
+          option: "milk",
+          types: [
+            { name: "Soy" },
+            { name: "Almond" },
+            { name: "Skim" },
+            { name: "Zymil" }
           ]
         },
         {
-          option:'strength',
+          option: "strength",
+          types: [{ name: "Decaf" }, { name: "Extra shot" }]
+        },
+        {
+          option: "topping",
           types: [
-          { name: "Decaf" },
-          { name: "Extra shot" }
+            { name: "Caramel" },
+            { name: "Hazelnut" },
+            { name: "Vanilla" }
           ]
         },
         {
-          option:'topping',
-          types: [
-          { name: "Caramel"},
-          { name: "Hazelnut"},
-          { name: "Vanilla" }
-          ] 
-        },
-        {
-          option:'sugar',
-          types: [
-            { name: "1 Sugar"}, 
-            { name: "2 Sugars" }
-          ]
+          option: "sugar",
+          types: [{ name: "1 Sugar" }, { name: "2 Sugars" }]
         }
       ]
     };
@@ -152,7 +151,6 @@ export default {
     }
   },
   methods: {
-
     DeleteOrder() {
       let curUser = firebase.auth().currentUser.uid;
       db.collection("orders")
@@ -166,7 +164,7 @@ export default {
         });
     },
     EditCoffee() {
-      console.log(this.choice)
+      console.log(this.choice);
       let curUser = firebase.auth().currentUser.uid;
       if (this.order.drink) {
         this.feedback = null;
@@ -185,22 +183,22 @@ export default {
           .catch(err => {
             console.log(err);
           });
-        let extras = this.order.extras.map((item)=>{
-          return item['name']
+        let extras = this.order.extras.map(item => {
+          return item["name"];
         });
-        extras = _.orderBy(extras, [extras => extras.toLowerCase()],['asc'])
-        console.log(extras)
+        extras = _.orderBy(extras, [extras => extras.toLowerCase()], ["asc"]);
+        console.log(extras);
         db.collection("orders")
           .doc(curUser)
           .set({
             name: this.vueRoot.userData.name,
             drink: this.order.drink,
             size: this.order.size,
-            extras_list: extras , // for multiselect
-            extras:this.order.extras , //list of items, readable
+            extras_list: extras, // for multiselect
+            extras: this.order.extras, //list of items, readable
             other: this.order.other,
             geo: this.order.geo,
-            
+
             orderTime: Date.now()
           })
           .then(() => {
@@ -214,10 +212,10 @@ export default {
       }
     }
   },
-
+  created() {},
   mounted() {
     // console.log(isLoggedIn)
-    console.log(this.vueRoot)
+    console.log(this.vueRoot);
     if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
       /* if (this.vueRoot.orderData.orderActive) {
         this.order.orderActive = this.vueRoot.orderData.orderActive;
@@ -225,6 +223,7 @@ export default {
 
       if (this.vueRoot.orderData.drink) {
         this.order.drink = this.vueRoot.orderData.drink;
+        this.exists=true
       }
 
       if (this.vueRoot.orderData.size) {
@@ -270,7 +269,7 @@ export default {
 
     M.AutoInit();
 
-    console.log(this.vueRoot.isLoggedIn)
+    console.log(this.vueRoot.isLoggedIn);
   }
 };
 </script>
