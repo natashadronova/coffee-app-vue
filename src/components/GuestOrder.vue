@@ -1,11 +1,19 @@
 <template>
   <div class="edit-order container">
-    <!-- v-if="order" -->
-    <h2>Your Order</h2>
-    <p v-if="exists">Order already submitted. </p>
-    <!-- <h2 v-if="isLoggedIn && this.vueRoot.orderData ">Add Order</h2> -->
+    <h2>Guest Order</h2>
+    <p>Ordering for someone else?</p>
+    <p>By the way, currently you cannot delete guest orders through the app :) but... it's coming soon!</p>
     <div class="row">
-      <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">
+      <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="GuestOrder">
+        <div class="input-field col s12">
+          <input
+            placeholder="Guest name"
+            id="name"
+            type="text"
+            class="validate"
+            v-model="order.name"
+          />
+        </div>
         <!-- Drink -->
         <div class="input-field col s12">
           <multiselect v-model="order.drink" :options="options.drink"></multiselect>
@@ -79,7 +87,7 @@ import Multiselect from "vue-multiselect";
 import _ from "lodash";
 
 export default {
-  name: "YourOrder",
+  name: "GuestOrder",
   components: {
     // Autocomplete,
     Multiselect
@@ -162,32 +170,17 @@ export default {
     EditCoffee() {
       console.log(this.choice);
       let curUser = firebase.auth().currentUser.uid;
-      if (this.order.drink) {
-        this.feedback = null;
-        db.collection("users")
-          .doc(curUser)
-          .update({
-            drink: this.order.drink,
-            size: this.order.size,
-            extras: this.order.extras,
-            other: this.order.other,
-            geo: this.order.geo
-          })
-          .then(() => {
-            this.$router.push({ name: "Index" });
-          })
-          .catch(err => {
-            console.log(err);
-          });
+      
+
         let extras = this.order.extras.map(item => {
           return item["name"];
         });
         extras = _.orderBy(extras, [extras => extras.toLowerCase()], ["asc"]);
         console.log(extras);
         db.collection("orders")
-          .doc(curUser)
+          .doc(this.order.name)
           .set({
-            name: this.vueRoot.userData.name,
+            name: this.order.name+" (guest)",
             drink: this.order.drink,
             size: this.order.size,
             extras_list: extras, // for multiselect
@@ -203,64 +196,63 @@ export default {
           .catch(err => {
             console.log(err);
           });
-      } else {
-        this.feedback = "You must add a coffee to your order";
-      }
-    }
+      } 
+  
+    
   },
 
   mounted() {
    
-    if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
-      /* if (this.vueRoot.orderData.orderActive) {
-        this.order.orderActive = this.vueRoot.orderData.orderActive;
-      } */
+    // if (this.vueRoot.orderData !== undefined && this.vueRoot.orderData) {
+    //   /* if (this.vueRoot.orderData.orderActive) {
+    //     this.order.orderActive = this.vueRoot.orderData.orderActive;
+    //   } */
 
-      if (this.vueRoot.orderData.drink) {
-        this.order.drink = this.vueRoot.orderData.drink;
-        this.exists = true;
-      }
+    //   if (this.vueRoot.orderData.drink) {
+    //     this.order.drink = this.vueRoot.orderData.drink;
+    //     this.exists = true;
+    //   }
 
-      if (this.vueRoot.orderData.size) {
-        this.order.size = this.vueRoot.orderData.size;
-      }
+    //   if (this.vueRoot.orderData.size) {
+    //     this.order.size = this.vueRoot.orderData.size;
+    //   }
 
-      if (this.vueRoot.orderData.extras) {
-        this.order.extras = this.vueRoot.orderData.extras;
-      }
+    //   if (this.vueRoot.orderData.extras) {
+    //     this.order.extras = this.vueRoot.orderData.extras;
+    //   }
 
-      if (this.vueRoot.orderData.other) {
-        this.order.other = this.vueRoot.orderData.other;
-      }
+    //   if (this.vueRoot.orderData.other) {
+    //     this.order.other = this.vueRoot.orderData.other;
+    //   }
 
-      if (this.vueRoot.orderData.geo) {
-        this.order.geo = this.vueRoot.orderData.geo;
-      }
-    } else {
-      /* if (this.vueRoot.userData.orderActive) {
-        this.order.orderActive = this.vueRoot.userData.orderActive;
-      } */
+    //   if (this.vueRoot.orderData.geo) {
+    //     this.order.geo = this.vueRoot.orderData.geo;
+    //   }
+    // } else {
+    //   /* if (this.vueRoot.userData.orderActive) {
+    //     this.order.orderActive = this.vueRoot.userData.orderActive;
+    //   } */
 
-      if (this.vueRoot.userData.drink) {
-        this.order.drink = this.vueRoot.userData.drink;
-      }
+    //   if (this.vueRoot.userData.drink) {
+    //     this.order.drink = this.vueRoot.userData.drink;
+    //   }
 
-      if (this.vueRoot.userData.size) {
-        this.order.size = this.vueRoot.userData.size;
-      }
+    //   if (this.vueRoot.userData.size) {
+    //     this.order.size = this.vueRoot.userData.size;
+    //   }
 
-      if (this.vueRoot.userData.extras) {
-        this.order.extras = this.vueRoot.userData.extras;
-      }
+    //   if (this.vueRoot.userData.extras) {
+    //     this.order.extras = this.vueRoot.userData.extras;
+    //   }
 
-      if (this.vueRoot.userData.other) {
-        this.order.other = this.vueRoot.userData.other;
-      }
+    //   if (this.vueRoot.userData.other) {
+    //     this.order.other = this.vueRoot.userData.other;
+    //   }
 
-      if (this.vueRoot.userData.geo) {
-        this.order.geo = this.vueRoot.userData.geo;
-      }
-    }
+    //   if (this.vueRoot.userData.geo) {
+    //     this.order.geo = this.vueRoot.userData.geo;
+    //   }
+    // }
 
     M.AutoInit();
 

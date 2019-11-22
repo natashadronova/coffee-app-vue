@@ -2,7 +2,7 @@
   <div class="edit-order container">
     <!-- v-if="order" -->
     <h2>Your Order</h2>
-    <p v-if="exists">Order already submitted. </p>
+    <p v-if="exists">Your order has already been submitted. Want to edit your choice? </p>
     <!-- <h2 v-if="isLoggedIn && this.vueRoot.orderData ">Add Order</h2> -->
     <div class="row">
       <form class="col s12 selectEdit" @submit.prevent="EditCoffee" id="yourOrder">

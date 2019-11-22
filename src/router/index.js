@@ -1,12 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
-// import AddOrder from '@/components/AddOrder'
-// import EditOrder from '@/components/EditOrder'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import OrderSummary from '@/components/OrderSummary'
 import YourOrder from '@/components/YourOrder'
+import GuestOrder from '@/components/GuestOrder'
 import firebase from 'firebase';
 import VueMaterial from 'vue-material';
 import Multiselect from "vue-multiselect";
@@ -59,7 +58,15 @@ let router =  new Router({
       }
     },
 
-  
+    {
+      path: '/guest-order',
+      name: 'GuestOrder',
+      component: GuestOrder,
+      meta:{
+        requiresAuth:true
+      }
+    },
+
 
     {
       path:'/login',
