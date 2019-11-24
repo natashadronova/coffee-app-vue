@@ -121,7 +121,7 @@ export default {
       },
       extras: [
         {
-          option: "milk",
+          option: "Milk",
           types: [
             { name: "Soy" },
             { name: "Almond" },
@@ -130,11 +130,7 @@ export default {
           ]
         },
         {
-          option: "strength",
-          types: [{ name: "Decaf" }, { name: "Extra shot" }]
-        },
-        {
-          option: "topping",
+          option: "Topping",
           types: [
             { name: "Caramel" },
             { name: "Hazelnut" },
@@ -142,8 +138,16 @@ export default {
           ]
         },
         {
-          option: "sugar",
+          option: "Sugar",
           types: [{ name: "1 Sugar" }, { name: "2 Sugars" }]
+        },
+        {
+          option:"Cold Coffee",
+          types:[{name:"Iced"}]
+        },
+        {
+          option: "Strength",
+          types: [{ name: "Decaf" }, { name: "Extra shot" }]
         }
       ]
     };

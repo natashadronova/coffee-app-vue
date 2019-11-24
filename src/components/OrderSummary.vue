@@ -3,12 +3,12 @@
     <div class="container-fluid">
       <!-- <i class="material-icons delete deep-orange-text darken-2">add</i> -->
       <div class="centered">
-        <h3 class="centered">{{orders.length}} coffees ordered</h3>
+        <h3 class="centered">{{orders.length}} Orders</h3>
       </div>
 
       <table class="highlight centered">
         <thead>
-          <tr class="brown lighten-2 white-text">
+          <tr class=" brown darken-3 z-depth-0">
             <th>Drink</th>
             <th>Size</th>
             <th>Extras</th>
@@ -37,7 +37,7 @@
       <div class="center-align container-fluid">
         <button
           v-if="vueRoot.admin"
-          class="hidden-sm btn amber darken-3 centered"
+          class="hidden-sm btn red darken-2 z-depth-0 white-text centered clear-btn"
           v-on:click="ClearOrders"
         >Clear Orders Forever</button>
       </div>
@@ -170,5 +170,29 @@ export default {
 
 .container-fluid {
   margin-top: 20px;
+}
+
+h3 {
+  color:#402C30 !important;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  padding-top: 20px;
+}
+
+thead tr {
+  color: #d7ccc8;
+  font-family: "Open Sans", sans-serif;
+  font-size:1.2em;
+}
+
+tbody th, td {
+  font-size: 1.2em !important;
+  font-family: "Raleway", sans-serif;
+  color: #402C30;
+}
+
+.clear-btn{
+  font-family: "Open Sans", sans-serif;
+  font-size:1.2em;
 }
 </style>

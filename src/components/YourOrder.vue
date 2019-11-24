@@ -140,6 +140,10 @@ export default {
         {
           option: "sugar",
           types: [{ name: "1 Sugar" }, { name: "2 Sugars" }]
+        },
+        {
+          option:"Cold Coffee",
+          types:[{name:"Iced"}]
         }
       ]
     };

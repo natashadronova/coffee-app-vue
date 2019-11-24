@@ -6,7 +6,7 @@
     </div>
     <table class="highlight centered">
       <thead>
-        <tr class="brown lighten-2 white-text">
+        <tr class="brown darken-3 z-depth-0">
           <!-- <th>Ordered?</th> -->
           <th>Order</th>
           <th>Size</th>
@@ -65,7 +65,7 @@ export default {
   data() {
     return {
       orders: [],
-      myOrderClass: "orange lighten-5",
+      myOrderClass: "brown lighten-4",
       curUser: ""
     };
   },
@@ -148,3 +148,40 @@ export default {
   cursor: pointer;
   color: orange;
 }
+
+.page-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.container-fluid {
+  margin-top: 20px;
+}
+
+h3 {
+  color:#402C30 !important;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  padding-top: 20px;
+}
+
+thead tr {
+  color: #d7ccc8;
+  font-family: "Open Sans", sans-serif;
+  font-size:1.2em;
+}
+
+tbody th, td {
+  /* font-size: 1.2em !important; */
+  font-family: "Raleway", sans-serif;
+  color: #402C30;
+}
+
+.clear-btn{
+  font-family: "Open Sans", sans-serif;
+  font-size:1.2em;
+}
+</style>
