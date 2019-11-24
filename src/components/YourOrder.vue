@@ -53,15 +53,19 @@
         </div>
 
         <div class="input-field col s12">
-          <div class="field center-align">
-            <button class="btn amber darken-3">Submit</button>
-            <!-- <button class="btn amber darken-3" v-if="isLoggedIn && !vueRoot.orderData ">Add </button> -->
-            <!-- <button class="btn amber darken-3" v-if="isLoggedIn && vueRoot.orderData ">Edit </button> -->
+          <div class="field center-align row">
+             <div class="col s6"><button class="btn red darken-2 z-depth-0 brown-text text-lighten-4 submit-btn" v-on:click="DeleteOrder" v-if="exists">Delete</button></div>
+            <div class="col s6">
+<button class="btn brown darken-2 z-depth-0 brown-text text-lighten-4 submit-btn">Submit</button>
+            </div>
+           
+            
+           
           </div>
         </div>
       </form>
       <div class="field center-align">
-        <button class="btn red darken-3" v-on:click="DeleteOrder" v-if="exists">Delete</button>
+        
         <!-- v-on:click="DeleteOrder" v-if="isLoggedIn && vueRoot.orderData" -->
       </div>
     </div>
@@ -270,4 +274,109 @@ export default {
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<style>
+/* text */
+h2 {
+  color:#402C30 !important;
+  font-family: "Raleway", sans-serif;
+  text-align: center;
+  padding-top: 20px;
+}
+
+p {
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+  font-size: 1.1em;
+  color:#402C30 !important;
+}
+
+.submit-btn{
+  font-family: "Open Sans", sans-serif;
+  font-size:1.2em;
+}
+
+/* form */
+.edit-order {
+background-color: #d7ccc8  !important;
+border-radius: 5px;
+padding-bottom: 20px;
+text-align:center;
+}
+
+.name-field {
+  padding: 40px;
+}
+
+.name-field::placeholder {
+  color:#402C30;
+  font-family: "Open Sans", sans-serif;
+  font-style: italic;
+  padding-left: 20px;
+}
+
+.check-style{
+  color: #402C30;
+  font-family: "Open Sans", sans-serif;
+  font-style: italic;
+  font-size: 1.2em;
+}
+
+.multiselect__tag {
+  background-color:#d7ccc8;
+  color: #402C30;
+  font-style: italic;
+  font-family: "Open Sans", sans-serif;
+
+}
+.multiselect__placeholder  {
+  color: #402C30;
+  font-family: "Open Sans", sans-serif;
+}
+
+.multiselect__option {
+  color: #402C30;
+  font-family: "Open Sans", sans-serif;
+}
+
+
+ .multiselect__option--selected {
+    background: #402C30;
+    color: #d7ccc8 ;
+    font-weight: bold;
+ }
+
+/* inside multiselect menu, which color will the options appear */
+.multiselect__option--selected.multiselect__option--highlight {
+  background-color: #402C30;
+  color: #d7ccc8;
+  font-family: "Open Sans", sans-serif;
+}
+
+.namefield{
+  color: red;
+}
+.input-field textarea {
+  color:red;
+}
+
+
+ /* free text fields styling*/
+ .row .input-field input:focus {
+   border-bottom: 1px solid #617C38 !important;
+   box-shadow: 0 1px 0 0 #617C38 !important;
+   color: #402C30;
+   font-family: "Open Sans", sans-serif;
+   font-style: italic;
+   /* padding-left: 20px; */
+ } 
+
+ .row .input-field input {
+   color: #402C30;
+   font-family: "Open Sans", sans-serif;
+   font-style: italic;
+   /* padding-left: 20px; */
+   border-bottom: 1px solid #402C30 !important;
+   box-shadow: 0 1px 0 0 #402C30 !important;
+ } 
+</style>
 

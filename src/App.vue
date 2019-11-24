@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="whole-app">
     <Navbar/>
     <router-view/>
   </div>
@@ -18,5 +18,7 @@ export default {
 </script>
 
 <style>
-
+body, html {
+  background:white;
+}
 </style>
