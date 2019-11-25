@@ -46,31 +46,31 @@
             </a>
           </li>
           <li class="hidden-md">
-            <a class="dropdown-trigger btn-flat" href="#" data-target="menu-dropdown "><i class="material-icons brown-text text-lighten-3">menu</i></a>
+            <a class="dropdown-trigger btn brown darken-2 z-depth-0 brown-text text-lighten-4" href="#" data-target="menu-dropdown"><i class="material-icons brown-text text-lighten-3">menu</i></a>
 
             <ul id="menu-dropdown" class="dropdown-content">
               <li v-if="isLoggedIn">
-                <router-link :to="{name: 'Index'}">All Orders</router-link>
+                <router-link :to="{name: 'Index'}"><span class="brown-text text-lighten-3 menu-link">All Orders</span></router-link>
               </li>
               <li v-if="isLoggedIn">
-                <router-link :to="{name: 'OrderSummary'}">Order Summary</router-link>
+                <router-link :to="{name: 'OrderSummary'}"><span class="brown-text text-lighten-3 menu-link">Order Summary</span></router-link>
               </li>
               <li v-if="isLoggedIn && vueRoot.orderData ">
-                <router-link :to="{ name: 'YourOrder'}">Edit Order</router-link>
+                <router-link :to="{ name: 'YourOrder'}"><span class="brown-text text-lighten-3 menu-link">Edit Order</span></router-link>
               </li>
               <li v-if="isLoggedIn && !vueRoot.orderData ">
-                <router-link :to="{ name: 'YourOrder'}">Add Order</router-link>
+                <router-link :to="{ name: 'YourOrder'}"><span class="brown-text text-lighten-3 menu-link">Add Order</span></router-link>
               </li>
               <li v-if="isLoggedIn ">
-                <router-link :to="{ name: 'GuestOrder'}">Guest Order</router-link>
+                <router-link :to="{ name: 'GuestOrder'}"><span class="brown-text text-lighten-3 menu-link">Guest Order</span></router-link>
               </li>
 
               <li v-if="!isLoggedIn">
-                <router-link :to="{name: 'Login'}">Log In</router-link>
+                <router-link :to="{name: 'Login'}"><span class="brown-text text-lighten-3 menu-link">Log In</span></router-link>
               </li>
 
               <li v-if="isLoggedIn">
-                <a v-on:click="Logout">Log Out</a>
+                <a v-on:click="Logout"><span class="brown-text text-lighten-3 menu-link">Log Out</span></a>
               </li>
             </ul>
           </li>
@@ -84,6 +84,10 @@
 <script>
 import firebase from "firebase";
 import db from "@/firebase/init";
+import M from "materialize-css";
+// import * as M from 'materialize-css/dist/js/materialize';
+import VueMaterial from "vue-material";
+
 //import func from '../../vue-temp/vue-editor-bridge';
 
 export default {
@@ -131,6 +135,11 @@ export default {
   },
   mounted() {
     M.AutoInit();
+    
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.dropdown-trigger');
+    var instances = M.Dropdown.init(elems, options);
+  });
   }
 };
 </script>
@@ -161,7 +170,7 @@ export default {
 }
 
 .menu-link {
-  font-size: 1.2em !important;
+  /* font-size: 1.2em !important; */
   font-family: "Raleway", sans-serif;
 }
 

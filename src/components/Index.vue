@@ -1,6 +1,7 @@
 <template>
   <div class="index container">
     <div class="container-fluid" height="80px">
+      <!-- <YourOrder/> -->
       <br />
       <br />
     </div>
@@ -59,9 +60,14 @@ import moment from "moment";
 import db from "@/firebase/init";
 import firebase from "firebase";
 import _ from "lodash";
+import YourOrder from '@/components/YourOrder'
+
 
 export default {
   name: "Index",
+  components: {
+    YourOrder
+  },
   data() {
     return {
       orders: [],
